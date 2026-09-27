@@ -1,0 +1,49 @@
+# =============================================
+# Internship Portal — .gitignore
+# =============================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.spec
+venv/
+.venv/
+env/
+
+# --- Secrets & Config (NEVER commit these) ---
+.env
+*.key
+*.pem
+
+# --- Data files (large / sensitive) ---
+data/master_students.csv
+data/recycle_bin.csv
+data/certificates.csv
+data/test_results.csv
+data/company_drives.csv
+data/company_hr.json
+data/resumes/
+data/certificates/
+
+# --- ML Model artifacts ---
+model/*.pkl
+model/*.joblib
+model/faiss_index/
+
+# --- IDE & OS ---
+.DS_Store
+.vscode/
+*.swp
+*.swo
+Thumbs.db
+
+# --- Docker ---
+*.log
+.dockerignore

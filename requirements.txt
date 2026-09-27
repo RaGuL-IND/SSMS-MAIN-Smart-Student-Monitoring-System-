@@ -1,0 +1,30 @@
+# =============================================
+# Internship & Placement Portal — Dependencies
+# =============================================
+
+# Core Web Framework
+flask>=3.0
+werkzeug>=3.0
+python-dotenv>=1.0
+gunicorn>=21.2          # Production WSGI server
+
+# Data & ML
+pandas>=2.0
+numpy>=1.26
+scikit-learn>=1.3
+xgboost>=2.0
+joblib>=1.3
+
+# AI / Semantic Search
+sentence-transformers>=2.2
+faiss-cpu>=1.7           # Use faiss-gpu if GPU available
+pdfplumber>=0.10
+transformers>=4.30
+torch>=2.0
+
+# Resume Parsing / NLP (optional, comment out if not needed)
+spacy>=3.7
+nltk>=3.8
+
+# PDF Export
+reportlab>=4.0
