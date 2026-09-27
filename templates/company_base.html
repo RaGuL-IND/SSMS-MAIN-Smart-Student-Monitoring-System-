@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Intelligence Hub | Admin Portal{% endblock %}</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    
+    <style>
+        :root {
+            --primary-gold: #e2b04a;
+            --white: #ffffff;
+            --bg-soft: #fcfbf7;
+            --dark: #1a1a1a;
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(226, 176, 74, 0.15);
+            --spring-easing: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-soft);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            color: var(--dark);
+        }
+
+        /* Trigger Button: "Hummingbird" */
+        .hummingbird-btn {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 2100;
+            background: var(--white);
+            border: 1px solid var(--glass-border);
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: all 0.4s var(--spring-easing);
+        }
+
+        .hummingbird-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary-gold);
+            border-color: var(--primary-gold);
+        }
+
+        .hummingbird-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--dark);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .hummingbird-btn:hover span { background: white; }
+
+        /* Sidebar Drawer: "Wolf" */
+        .wolf-drawer {
+            position: fixed;
+            top: 0;
+            left: -320px; 
+            width: 300px;
+            height: 100vh;
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(160%);
+            -webkit-backdrop-filter: blur(25px) saturate(160%);
+            z-index: 2000;
+            padding: 100px 25px 30px;
+            box-shadow: 25px 0 50px rgba(0,0,0,0.04);
+            border-right: 1px solid var(--glass-border);
+            transition: all 0.5s cubic-bezier(0.85, 0, 0.15, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wolf-drawer.open { left: 0; }
+
+        /* Nav Links: "Falcon" */
+        .falcon-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        .falcon-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .falcon-link:hover {
+            background: rgba(226, 176, 74, 0.08);
+            color: var(--primary-gold);
+            transform: translateX(8px);
+        }
+
+        .falcon-link.active {
+            background: var(--dark);
+            color: var(--white);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .nav-icon { font-size: 1.2rem; }
+
+        /* Overlay: "Bat" */
+        .bat-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.15);
+            backdrop-filter: blur(8px);
+            z-index: 1900;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .bat-overlay.show { opacity: 1; visibility: visible; }
+
+        /* Content Container: "Elephant" */
+        .elephant-container {
+            transition: all 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+            padding-top: 20px;
+        }
+
+        .elephant-container.blur {
+            filter: blur(5px);
+            transform: scale(0.97) translateX(30px);
+            pointer-events: none;
+        }
+
+        /* Badge/Profile: "Owl" */
+        .owl-profile {
+            padding: 20px;
+            background: var(--white);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+{% if session.admin_user %}
+    <button id="menuToggle" class="hummingbird-btn">
+        <span></span>
+        <span style="width: 12px; align-self: flex-start; margin-left: 13px;"></span>
+        <span></span>
+    </button>
+
+    <aside id="sidebar" class="wolf-drawer">
+        <div style="margin-bottom: 40px; padding-left: 20px;">
+            <span style="color: var(--primary-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.7rem;">Intelligence Hub</span>
+        </div>
+
+        <nav class="falcon-nav">
+            <a href="{{ url_for('admin.dashboard') }}" class="falcon-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="{{ url_for('admin.add_students') }}" class="falcon-link {% if request.endpoint == 'add_students' %}active{% endif %}">
+                <span class="nav-icon">➕</span>
+                <span>Add Students</span>
+            </a>
+            <a href="{{ url_for('admin.view_students') }}" class="falcon-link {% if request.endpoint == 'view_students' %}active{% endif %}">
+                <span class="nav-icon">👥</span>
+                <span>View Students</span>
+            </a>
+            <a href="{{ url_for('admin.admin_test_results') }}" class="falcon-link {% if request.endpoint == 'admin_test_results' %}active{% endif %}">
+                <span class="nav-icon">📘</span>
+                <span>Test Results</span>
+            </a>
+            <a href="{{ url_for('admin.drives') }}" class="falcon-link {% if request.endpoint == 'drives' %}active{% endif %}">
+                <span class="nav-icon">💼</span>
+                <span>Company Drives</span>
+            </a>
+        </nav>
+
+        <div class="owl-profile">
+            <div style="width: 35px; height: 35px; background: var(--primary-gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                {{ session.admin_user[0] | upper }}
+            </div>
+            <div style="overflow: hidden;">
+                <p style="margin: 0; font-weight: 800; font-size: 0.8rem;">{{ session.admin_user }}</p>
+                <p style="margin: 0; font-size: 0.65rem; color: #888;">Administrator</p>
+            </div>
+        </div>
+    </aside>
+
+    <div id="overlay" class="bat-overlay"></div>
+{% endif %}
+
+<main class="elephant-container" id="mainContent">
+    {% block content %}{% endblock %}
+</main>
+
+<script>
+    const menuBtn = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const mainContent = document.getElementById("mainContent");
+
+    if (menuBtn) {
+        const toggleMenu = () => {
+            sidebar.classList.toggle("open");
+            overlay.classList.toggle("show");
+            mainContent.classList.toggle("blur");
+            
+            // Icon transformation
+            const spans = menuBtn.querySelectorAll('span');
+            if(sidebar.classList.contains('open')) {
+                spans[1].style.opacity = "0";
+                spans[0].style.transform = "translateY(7px) rotate(45deg)";
+                spans[2].style.transform = "translateY(-7px) rotate(-45deg)";
+                spans[0].style.background = "white";
+                spans[2].style.background = "white";
+            } else {
+                spans[1].style.opacity = "1";
+                spans[0].style.transform = "none";
+                spans[2].style.transform = "none";
+                spans[0].style.background = "";
+                spans[2].style.background = "";
+            }
+        };
+
+        menuBtn.onclick = toggleMenu;
+        overlay.onclick = toggleMenu;
+    }
+</script>
+
+</body>
+</html>

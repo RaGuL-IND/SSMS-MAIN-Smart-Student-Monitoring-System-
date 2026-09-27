@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark-charcoal: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.9);
+        --glass-border: rgba(226, 176, 176, 0.15);
+    }
+
+    body {
+        background-color: var(--bg-soft);
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    /* Main Container: "Elephant" */
+    .elephant-login-wrapper {
+        display: flex;
+        width: 100%;
+        max-width: 900px;
+        height: 550px;
+        background: var(--white);
+        border-radius: 40px;
+        box-shadow: 0 40px 100px rgba(0,0,0,0.08);
+        overflow: hidden;
+        animation: elephantPop 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Left Branding Side: "Giraffe" */
+    .giraffe-branding {
+        flex: 1;
+        background: var(--dark-charcoal);
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        color: white;
+    }
+
+    .giraffe-branding::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(226, 176, 74, 0.1) 0%, transparent 70%);
+    }
+
+    .giraffe-branding h1 {
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 1;
+        margin: 0;
+        z-index: 1;
+    }
+
+    .giraffe-branding h1 span {
+        color: var(--primary-gold);
+        display: block;
+    }
+
+    .giraffe-branding p {
+        color: #888;
+        margin-top: 20px;
+        font-weight: 500;
+        z-index: 1;
+    }
+
+    /* Right Form Side: "Gazelle" */
+    .gazelle-form-side {
+        flex: 1;
+        background: var(--glass);
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Input Styling: "Panther" */
+    .panther-group {
+        margin-bottom: 25px;
+        transform: translateY(20px);
+        opacity: 0;
+        animation: pantherSlide 0.5s ease forwards;
+    }
+
+    .panther-group:nth-child(2) { animation-delay: 0.2s; }
+
+    .panther-label {
+        font-weight: 800;
+        color: #999;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .panther-input {
+        width: 100%;
+        padding: 16px 20px;
+        border-radius: 16px;
+        border: 1px solid #eee;
+        background: #f9f9f9;
+        font-family: inherit;
+        font-weight: 600;
+        color: var(--dark-charcoal);
+        transition: all 0.3s ease;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .panther-input:focus {
+        border-color: var(--primary-gold);
+        background: var(--white);
+        box-shadow: 0 10px 25px rgba(226, 176, 74, 0.15);
+    }
+
+    /* Login Button: "Lion" */
+    .lion-btn {
+        background: var(--dark-charcoal);
+        color: white;
+        width: 100%;
+        padding: 18px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        margin-top: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .lion-btn::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .lion-btn:hover::before { left: 100%; }
+
+    .lion-btn:hover {
+        background: var(--primary-gold);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(226, 176, 74, 0.3);
+    }
+
+    /* Footer Link: "Falcon" */
+    .falcon-footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #bbb;
+    }
+
+    .falcon-link {
+        color: var(--primary-gold);
+        text-decoration: none;
+        font-weight: 800;
+        margin-left: 5px;
+    }
+
+    /* Keyframes */
+    @keyframes elephantPop {
+        from { opacity: 0; transform: scale(0.9) translateY(40px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes pantherSlide {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 850px) {
+        .giraffe-branding { display: none; }
+        .elephant-login-wrapper { max-width: 450px; }
+    }
+</style>
+
+<div class="elephant-login-wrapper">
+    <div class="giraffe-branding">
+        <div style="font-size: 2.5rem; margin-bottom: 20px;">🛡️</div>
+        <h1>Admin<span>Portal.</span></h1>
+        <p>Intelligence Hub Management System</p>
+    </div>
+
+    <div class="gazelle-form-side">
+        <h2 style="font-weight: 900; margin-bottom: 40px; color: var(--dark-charcoal); letter-spacing: -1px;">Login</h2>
+        
+        <form method="POST">
+            <div class="panther-group">
+                <label class="panther-label">Username</label>
+                <input type="text" name="username" class="panther-input" placeholder="Enter admin username" required>
+            </div>
+
+            <div class="panther-group">
+                <label class="panther-label">Password</label>
+                <input type="password" name="password" class="panther-input" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="lion-btn">
+                Authorize Access
+            </button>
+        </form>
+
+        <div class="falcon-footer">
+            New Admin? <a href="{{ url_for('admin.register') }}" class="falcon-link">Register here</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

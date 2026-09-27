@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- DataTables.net integration assets -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.8);
+        --shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Layout Wrapper: "Elephant" */
+    .elephant-view-container {
+        max-width: 1400px;
+        margin: 2rem auto;
+        padding: 0 30px;
+    }
+
+    /* Page Title: "Giraffe" */
+    .giraffe-title {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--dark);
+        margin-bottom: 2rem;
+        letter-spacing: -1.5px;
+    }
+    .giraffe-title span { color: var(--primary-gold); }
+
+    /* Filter Bar: "Fox" */
+    .fox-filter-bar {
+        background: var(--white);
+        padding: 25px;
+        border-radius: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: flex-end;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(226, 176, 74, 0.1);
+        margin-bottom: 2.5rem;
+    }
+
+    .fox-filter-bar label {
+        font-weight: 700;
+        font-size: 0.8rem;
+        color: #888;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .panther-select, .panther-input {
+        background: #f9f9f9;
+        border: 1px solid #eee;
+        padding: 10px 15px;
+        border-radius: 12px;
+        font-weight: 600;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .panther-select:focus, .panther-input:focus {
+        border-color: var(--primary-gold);
+        background: var(--white);
+    }
+
+    /* Buttons: "Lion" */
+    .lion-btn {
+        background: var(--dark);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 50px;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .lion-btn:hover {
+        background: var(--primary-gold);
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(226, 176, 74, 0.3);
+    }
+
+    .lion-btn-clear {
+        background: transparent;
+        color: #888;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+
+    /* Table: "Zebra" */
+    .zebra-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    .zebra-table th {
+        padding: 15px 20px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #aaa;
+        letter-spacing: 1px;
+    }
+
+    .zebra-table td {
+        background: var(--white);
+        padding: 20px;
+        font-weight: 600;
+        color: var(--dark);
+        border-top: 1px solid #f9f9f9;
+        border-bottom: 1px solid #f9f9f9;
+    }
+
+    .zebra-table tr td:first-child { border-left: 1px solid #f9f9f9; border-radius: 16px 0 0 16px; }
+    .zebra-table tr td:last-child { border-right: 1px solid #f9f9f9; border-radius: 0 16px 16px 0; }
+
+    .zebra-table tr:hover td {
+        background: #fffefb;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(226, 176, 74, 0.1);
+        transition: 0.3s;
+    }
+
+    /* Link: "Falcon" */
+    .falcon-link {
+        color: var(--dark);
+        text-decoration: none;
+        border-bottom: 2px solid var(--primary-gold);
+        padding-bottom: 2px;
+    }
+
+    .delete-action-bar {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .owl-badge {
+        background: #fff9e6;
+        color: var(--primary-gold);
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+    }
+</style>
+
+<div class="elephant-view-container">
+
+    <h1 class="giraffe-title">View <span>Students.</span></h1>
+
+    <form method="get" action="{{ url_for('admin.view_students') }}" class="fox-filter-bar">
+        <div>
+            <label>Batch</label>
+            <select name="batch" class="panther-select">
+                <option value="all">All</option>
+                {% for b in batches %}
+                <option value="{{ b }}" {% if request.args.get('batch') == b %}selected{% endif %}>{{ b }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Department</label>
+            <select name="dept" class="panther-select">
+                <option value="all">All</option>
+                {% for d in depts %}
+                <option value="{{ d }}" {% if request.args.get('dept') == d %}selected{% endif %}>{{ d }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Semester</label>
+            <select name="current_sem" class="panther-select">
+                <option value="all">All</option>
+                {% for s in semesters %}
+                <option value="{{ s }}" {% if request.args.get('current_sem') == s|string %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>CGPA Filter</label>
+            <div style="display: flex; gap: 5px;">
+                <select name="cgpa_filter_type" class="panther-select">
+                    <option value="">--</option>
+                    <option value="greater" {% if request.args.get('cgpa_filter_type') == 'greater' %}selected{% endif %}>></option>
+                    <option value="less" {% if request.args.get('cgpa_filter_type') == 'less' %}selected{% endif %}>&lt;</option>
+                </select>
+                <input type="number" name="cgpa_value" step="0.1" class="panther-input" style="width: 80px;" placeholder="8.5" value="{{ request.args.get('cgpa_value') or '' }}">
+            </div>
+        </div>
+
+        <div style="margin-bottom: 5px;">
+            <button type="submit" class="lion-btn">Apply Insights</button>
+            <a href="{{ url_for('admin.view_students') }}" class="lion-btn-clear">Clear Filters</a>
+        </div>
+    </form>
+
+    {% if students %}
+    <form id="studentsForm" method="post">
+        <div class="delete-action-bar">
+            <button type="submit" class="lion-btn" style="background: #e11d48; font-size: 0.8rem; padding: 10px 20px;">
+                🗑️ Delete Selected
+            </button>
+        </div>
+
+        <div style="overflow-x: auto; padding: 5px;">
+            <table id="studentsTable" class="zebra-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
+                        <th>Name</th>
+                        <th>Register No</th>
+                        <th>Batch</th>
+                        <th>Department</th>
+                        <th>Sem</th>
+                        <th>CGPA</th>
+                        <th>Skill Index</th>
+                        <th>Certs</th>
+                        <th>LeetCode</th>
+                        <th>CodeChef</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in students %}
+                    <tr>
+                        <td><input type="checkbox" class="selectBox" name="selected_students" value="{{ s.Register_Number }}"></td>
+                        <td><a href="{{ url_for('admin.student_profile', reg_no=s.Register_Number) }}" class="falcon-link">{{ s.Student_Name }}</a></td>
+                        <td style="color: #888;">{{ s.Register_Number }}</td>
+                        <td><span class="owl-badge">{{ s.Batch }}</span></td>
+                        <td>{{ s.Department }}</td>
+                        <td>Sem {{ s.Current_Sem }}</td>
+                        <td style="color: var(--primary-gold); font-weight: 800;">{{ s.CGPA }}</td>
+                        <td>{{ s.skill_index }}</td>
+                        <td>{{ s.Number_of_Certifications }}</td>
+                        <td style="color: #38a169;">{{ s.LeetCode_Problems_Solved }}</td>
+                        <td style="color: #e2b04a;">{{ s.CodeChef_Rating }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+    {% else %}
+    <div class="fox-filter-bar" style="justify-content: center; padding: 100px;">
+        <p style="color: #888; font-weight: 600;">No student records found matching your criteria.</p>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#studentsTable').DataTable({
+        pageLength: 10,
+        lengthMenu: [5, 10, 20, 50],
+        order: [[1, 'asc']], // Sort by name by default
+        columnDefs: [
+            { orderable: false, targets: 0 } // Disable sorting on checkbox column
+        ],
+        language: {
+            search: "🔍 Quick Filter:",
+            lengthMenu: "Show _MENU_ records per page",
+            info: "Showing _START_ to _END_ of _TOTAL_ candidates",
+            paginate: {
+                previous: "Prev",
+                next: "Next"
+            }
+        }
+    });
+});
+
+function toggleSelectAll() {
+    const master = document.getElementById("selectAll");
+    const table = $('#studentsTable').DataTable();
+    const rows = table.rows({ 'search': 'applied' }).nodes();
+    $('input[type="checkbox"]', rows).prop('checked', master.checked);
+}
+</script>
+
+{% endblock %}

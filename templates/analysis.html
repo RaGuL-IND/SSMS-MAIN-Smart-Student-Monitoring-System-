@@ -1,0 +1,737 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(226, 176, 74, 0.15);
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    .elephant-main { 
+        max-width: 1250px; 
+        margin: 0 auto; 
+        padding: 40px 20px 40px 100px; 
+    }
+
+    .giraffe-header h2 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: var(--dark);
+        margin: 5px 0 15px 0;
+        letter-spacing: -2px;
+    }
+    .giraffe-header h2 span { color: var(--primary-gold); }
+
+    .gazelle-card {
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        padding: 2rem;
+        border-radius: 32px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.03);
+        margin-bottom: 2rem;
+        border: 1px solid var(--glass-border);
+    }
+
+    .upload-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .panther-input {
+        flex-grow: 1;
+        background: var(--white);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 12px 18px;
+        font-weight: 600;
+    }
+
+    .nav-tabs-premium {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 2rem;
+        justify-content: center;
+    }
+
+    .nav-link-premium {
+        background: var(--white);
+        border: 1px solid var(--glass-border);
+        color: var(--dark);
+        padding: 12px 25px;
+        border-radius: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .nav-link-premium.active {
+        background: var(--dark);
+        color: white;
+        border-color: var(--dark);
+    }
+
+    .analysis-section { display: none; }
+    .analysis-section.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .zebra-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+    .zebra-table tbody td {
+        background: var(--white);
+        padding: 15px 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .zebra-table tr td:first-child { border-radius: 12px 0 0 12px; font-weight: 700; }
+    .zebra-table tr td:last-child { border-radius: 0 12px 12px 0; }
+
+    .lion-btn {
+        background: var(--dark);
+        color: white;
+        padding: 14px 28px;
+        border-radius: 14px;
+        font-weight: 700;
+        border: none;
+        transition: 0.3s;
+        white-space: nowrap;
+    }
+    .lion-btn:hover { background: var(--primary-gold); transform: translateY(-2px); }
+
+    .owl-badge {
+        background: rgba(226, 176, 74, 0.1);
+        color: var(--primary-gold);
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-weight: 800;
+    }
+
+  /* Updated split-view styling */
+.split-view {
+    display: flex;
+    gap: 40px; /* Increased gap for better look */
+    align-items: flex-start;
+}
+
+.chart-side {
+    flex: 0 0 60%; /* Increased from 45% to 60% for larger charts */
+    max-width: 650px; /* Increased from 400px to 650px */
+}
+
+.list-side {
+    flex: 1;
+    background: rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding: 25px;
+    max-height: 550px; /* Increased to match larger chart height */
+    overflow-y: auto;
+    border: 1px inset rgba(0,0,0,0.05);
+}
+
+    .list-side h4 {
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        color: var(--primary-gold);
+        text-transform: uppercase;
+    }
+
+    .student-item {
+        background: white;
+        padding: 12px 15px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        border-left: 4px solid var(--primary-gold);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+</style>
+
+<div class="elephant-main">
+    <div class="d-flex justify-content-between align-items-end mb-5">
+        <div class="giraffe-header">
+            <span style="color: var(--primary-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Intelligence Hub</span>
+            <h2>Analytics <span>Portal.</span></h2>
+        </div>
+        <button class="lion-btn" style="background: white; color: var(--dark); border: 1px solid #ddd;" onclick="window.location.href='/dashboard'">← Dashboard</button>
+    </div>
+
+    <div class="gazelle-card">
+        <form id="uploadForm" class="text-center">
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">📄</div>
+            <h4 class="mb-3">Upload Master CSV for Insight Generation</h4>
+            <div class="upload-box">
+                <input type="file" id="csvFile" accept=".csv" class="form-control panther-input" required>
+                <button class="lion-btn" type="submit">Analyze Performance</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="tabNav" style="display:none;">
+        <div class="nav-tabs-premium">
+            <div class="nav-link-premium active" onclick="switchTab('summary')">📌 Summary</div>
+            <div class="nav-link-premium" onclick="switchTab('languages')">🌐 Languages</div>
+            <div class="nav-link-premium" onclick="switchTab('subjects')">📘 Subjects</div>
+        </div>
+    </div>
+
+    <div id="analysisArea" style="display:none;">
+        <div id="summary" class="analysis-section active">
+            <div class="gazelle-card">
+                <h3 class="mb-4">📈 Numeric Performance Summary</h3>
+                <div id="numericSummary" class="table-responsive"></div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                <div class="gazelle-card" style="margin-bottom: 0;">
+                    <h3 class="mb-4">🎯 CGPA vs Skill Index Correlation</h3>
+                    <div style="position: relative; height: 350px;">
+                        <canvas id="correlationChart"></canvas>
+                    </div>
+                </div>
+                <div class="gazelle-card" style="margin-bottom: 0;">
+                    <h3 class="mb-4">🏢 Department Average Skill Index</h3>
+                    <div style="position: relative; height: 350px;">
+                        <canvas id="deptSkillChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="languages" class="analysis-section">
+            <div class="gazelle-card">
+                <div class="d-flex gap-3 mb-3">
+
+<select id="filterSem" class="panther-input">
+<option value="all">All Semesters</option>
+<option value="1">Sem 1</option>
+<option value="2">Sem 2</option>
+<option value="3">Sem 3</option>
+<option value="4">Sem 4</option>
+<option value="5">Sem 5</option>
+<option value="6">Sem 6</option>
+<option value="7">Sem 7</option>
+<option value="8">Sem 8</option>
+</select>
+
+<select id="filterBatch" class="panther-input">
+<option value="all">All Batches</option>
+<option value="2021">2021</option>
+<option value="2022">2022</option>
+<option value="2023">2023</option>
+<option value="2024">2024</option>
+</select>
+
+<select id="filterDept" class="panther-input">
+<option value="all">All Departments</option>
+<option value="CSE">CSE</option>
+<option value="AI & ML">AI & ML</option>
+<option value="IT">IT</option>
+<option value="ECE">ECE</option>
+</select>
+
+<select id="filterCgpaType" class="panther-input">
+<option value="none">CGPA Filter</option>
+<option value="greater">CGPA ></option>
+<option value="less">CGPA <</option>
+</select>
+
+<input type="number" step="0.1" id="filterCgpaValue"
+class="panther-input" placeholder="CGPA">
+
+<button onclick="resetFilters()" class="lion-btn">
+Reset
+</button>
+
+</div>
+              
+                <div class="split-view">
+                    <div class="chart-side">
+                        <h3 class="mb-4">Language Distribution</h3>
+                        <canvas id="langChart"></canvas>
+                    </div>
+                    <div class="list-side">
+
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h4 id="langListTitle">Student Directory</h4>
+
+        <button id="downloadLangCSV"
+        class="lion-btn"
+        style="padding:6px 12px; font-size:12px;"
+        onclick="downloadLanguageCSV()">
+        Download CSV
+        </button>
+    </div>
+
+    <div id="languageStudents">
+                            <p class="text-muted">Click on a language slice to filter students.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="subjects" class="analysis-section">
+            <div class="gazelle-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="m-0">Subject Averages</h3>
+                    <select id="semFilter" class="panther-input py-1" style="width: 150px;">
+                        <option value="all">All Semesters</option>
+                        {% for i in range(1, 9) %}<option value="{{i}}">Sem {{i}}</option>{% endfor %}
+                    </select>
+                </div>
+                <canvas id="subjectAvgChart" height="100"></canvas>
+            </div>
+
+            <div class="gazelle-card">
+                <div class="d-flex gap-3 mb-3">
+
+<select id="bucketFilterSem" class="panther-input">
+<option value="all">All Semesters</option>
+<option value="1">Sem 1</option>
+<option value="2">Sem 2</option>
+<option value="3">Sem 3</option>
+<option value="4">Sem 4</option>
+<option value="5">Sem 5</option>
+<option value="6">Sem 6</option>
+<option value="7">Sem 7</option>
+<option value="8">Sem 8</option>
+</select>
+
+<select id="bucketFilterBatch" class="panther-input">
+<option value="all">All Batches</option>
+<option value="2021">2021</option>
+<option value="2022">2022</option>
+<option value="2023">2023</option>
+<option value="2024">2024</option>
+</select>
+
+<select id="bucketFilterDept" class="panther-input">
+<option value="all">All Departments</option>
+<option value="CSE">CSE</option>
+<option value="AI & ML">AI & ML</option>
+<option value="IT">IT</option>
+<option value="ECE">ECE</option>
+</select>
+
+<select id="bucketFilterCgpaType" class="panther-input">
+<option value="none">CGPA Filter</option>
+<option value="greater">CGPA ></option>
+<option value="less">CGPA <</option>
+</select>
+
+<input type="number" step="0.1"
+id="bucketFilterCgpaValue"
+class="panther-input"
+placeholder="CGPA">
+
+</div>
+                <div class="split-view">
+                    <div class="chart-side">
+                        <h3 class="mb-3">Performance Buckets</h3>
+                        <select id="subjectSelect" class="panther-input w-100 mb-4"></select>
+                        <canvas id="subjectBucketChart"></canvas>
+                    </div>
+                    <div class="list-side">
+                        <h4 id="bucketListTitle">Bucket Directory</h4>
+                        <div id="bucketStudents">
+                            <p class="text-muted">Click on a bucket slice to filter students.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+function resetFilters(){
+
+document.getElementById("filterSem").value="all";
+document.getElementById("filterBatch").value="all";
+document.getElementById("filterDept").value="all";
+document.getElementById("filterCgpaType").value="none";
+document.getElementById("filterCgpaValue").value="";
+
+}
+let lastCsvText = null;
+let analysisResult = null;
+let currentLanguageStudents = [];
+let langChart = null, subjectAvgChart = null, bucketChart = null;
+
+const rainbowColors = [
+    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', 
+    '#FF9F40', '#00e676', '#f50057', '#00b0ff', '#ff5252'
+];
+
+function switchTab(tabId) {
+    document.querySelectorAll('.analysis-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-link-premium').forEach(l => l.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+}
+
+document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const file = document.getElementById("csvFile").files[0];
+    if (!file) return;
+
+    lastCsvText = await file.text();
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("sem", document.getElementById("semFilter").value);
+
+    const res = await fetch("/admin/analysis/upload", { method: "POST", body: fd });
+    const js = await res.json();
+    
+    if (!js.success) { alert(js.message); return; }
+
+    analysisResult = js.analysis;
+    document.getElementById("analysisArea").style.display = "block";
+    document.getElementById("tabNav").style.display = "block";
+    renderAnalysis();
+});
+
+let correlationChart = null, deptSkillChart = null;
+
+function renderAnalysis() {
+    renderNumericSummary();
+    renderLanguageChart();
+    renderSubjectAverages();
+    populateSubjectDropdown();
+    renderCorrelationChart();
+    renderDeptSkillChart();
+}
+
+function renderNumericSummary() {
+    const numeric = analysisResult.summary_numeric;
+    let table = `<table class='zebra-table'>
+        <thead><tr><th>Metric</th><th>Count</th><th>Mean</th><th>Min</th><th>Max</th></tr></thead><tbody>`;
+
+    for (let key in numeric) {
+        const n = numeric[key];
+        table += `<tr>
+            <td>${key.replace(/_/g, ' ')}</td>
+            <td><span class="owl-badge">${n.count}</span></td>
+            <td style="color: var(--primary-gold); font-weight: 800;">${n.mean}</td>
+            <td>${n.min}</td>
+            <td>${n.max}</td>
+        </tr>`;
+    }
+    table += "</tbody></table>";
+    document.getElementById("numericSummary").innerHTML = table;
+}
+
+function renderCorrelationChart() {
+    const dataPoints = analysisResult.cgpa_skill_correlation || [];
+    if (correlationChart) correlationChart.destroy();
+
+    correlationChart = new Chart(document.getElementById("correlationChart"), {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Student Candidates',
+                data: dataPoints,
+                backgroundColor: 'rgba(226, 176, 74, 0.6)',
+                borderColor: '#e2b04a',
+                pointRadius: 6,
+                pointHoverRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: { display: true, text: 'CGPA', font: { weight: 'bold' } },
+                    min: 0,
+                    max: 10
+                },
+                y: {
+                    title: { display: true, text: 'Skill Index', font: { weight: 'bold' } },
+                    min: 0,
+                    max: 100
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const point = context.raw;
+                            return `${point.label} (CGPA: ${point.x}, Skill Index: ${point.y})`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function renderDeptSkillChart() {
+    const dist = analysisResult.dept_avg_skill || {};
+    const labels = Object.keys(dist);
+    if (deptSkillChart) deptSkillChart.destroy();
+
+    deptSkillChart = new Chart(document.getElementById("deptSkillChart"), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Avg Skill Index',
+                data: labels.map(k => dist[k]),
+                backgroundColor: '#1a1a1a',
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100,
+                    title: { display: true, text: 'Avg Skill Index Value', font: { weight: 'bold' } }
+                }
+            }
+        }
+    });
+}
+
+function renderLanguageChart() {
+    const dist = analysisResult.foreign_language_dist;
+    const labels = Object.keys(dist);
+    if (langChart) langChart.destroy();
+    langChart = new Chart(document.getElementById("langChart"), {
+        type: "pie",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: labels.map(k => dist[k]),
+                backgroundColor: rainbowColors
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1.2, // This makes the chart slightly wider and larger
+            plugins: { 
+                legend: { 
+                    position: 'right', // Moves legend to side to save vertical space
+                    labels: { font: { size: 12, weight: 'bold' } } 
+                } 
+            },
+            onClick: (evt, items) => {
+                if (!items.length) return;
+                const lang = labels[items[0].index];
+                renderLanguageStudents(lang);
+            }
+        }
+    });
+}
+
+function renderLanguageStudents(lang) {
+
+    const cgpaType = document.getElementById("filterCgpaType").value;
+    const cgpaValue = parseFloat(document.getElementById("filterCgpaValue").value);
+
+    let students = analysisResult.foreign_language_students[lang] || [];
+    currentLanguageStudents = students;
+
+    students = students.filter(s => {
+
+        if (cgpaType === "greater" && s.CGPA <= cgpaValue) return false;
+
+        if (cgpaType === "less" && s.CGPA >= cgpaValue) return false;
+
+        return true;
+    });
+
+    document.getElementById("langListTitle").innerText = "Students: " + lang;
+
+    document.getElementById("languageStudents").innerHTML =
+        students.map(s => `
+        <div class="student-item">
+            <div class="fw-bold">${s.Student_Name}</div>
+            <small class="text-muted">
+                ${s.Register_Number} • CGPA: ${s.CGPA}
+            </small>
+        </div>
+    `).join("");
+}
+
+function renderSubjectAverages() {
+    const semFilter = document.getElementById("semFilter").value;
+    const allSubjects = analysisResult.subject_summary;
+    const semMap = analysisResult.source_semester_map;
+
+    let filteredSubjects = Object.keys(allSubjects);
+    if (semFilter !== "all") {
+        filteredSubjects = filteredSubjects.filter(s => semMap[s] === parseInt(semFilter));
+    }
+
+    if (subjectAvgChart) subjectAvgChart.destroy();
+    subjectAvgChart = new Chart(document.getElementById("subjectAvgChart"), {
+        type: "bar",
+        data: {
+            labels: filteredSubjects,
+            datasets: [{
+                label: 'Average Score',
+                data: filteredSubjects.map(s => allSubjects[s].avg),
+                backgroundColor: rainbowColors[1],
+                borderRadius: 8
+            }]
+        }
+    });
+}
+
+function populateSubjectDropdown() {
+    const subjects = Object.keys(analysisResult.subject_summary);
+    const select = document.getElementById("subjectSelect");
+    select.innerHTML = subjects.map(s => `<option value="${s}">${s}</option>`).join("");
+    select.onchange = () => renderBucketChart();
+    renderBucketChart();
+}
+
+function renderBucketChart() {
+    const subject = document.getElementById("subjectSelect").value;
+    const buckets = analysisResult.subject_summary[subject].buckets;
+    if (bucketChart) bucketChart.destroy();
+    bucketChart = new Chart(document.getElementById("subjectBucketChart"), {
+        type: "doughnut",
+        data: {
+            labels: buckets.map(b => b.label),
+            datasets: [{
+                data: buckets.map(b => b.count),
+                backgroundColor: rainbowColors
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            onClick: (evt, items) => {
+                if (!items.length) return;
+                const idx = items[0].index;
+                const b = buckets[idx];
+                fetchBucketStudents(subject, b.label, b.min, b.max);
+            }
+        }
+    });
+}
+
+async function fetchBucketStudents(subject, label, low, high) {
+    const cgpaType = document.getElementById("bucketFilterCgpaType").value;
+    const cgpaValue = parseFloat(document.getElementById("bucketFilterCgpaValue").value);
+
+    const sem = document.getElementById("bucketFilterSem").value;
+    const batch = document.getElementById("bucketFilterBatch").value;
+    const dept = document.getElementById("bucketFilterDept").value;
+
+    const res = await fetch("/admin/analysis/bucket_students", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            subject,
+            low,
+            high,
+            sem,
+            batch,
+            dept,
+            cgpaType,
+            cgpaValue,
+            csv: lastCsvText
+        })
+    });
+
+    const js = await res.json();
+    let students = js.students || [];
+
+    students = students.filter(s => {
+        if (cgpaType === "greater" && s.cgpa <= cgpaValue) return false;
+        if (cgpaType === "less" && s.cgpa >= cgpaValue) return false;
+        return true;
+    });
+
+    document.getElementById("bucketListTitle").innerText = "Students: " + label;
+    document.getElementById("bucketStudents").innerHTML = students.map(s => `
+        <div class="student-item">
+            <div class="fw-bold">${s.student_name}</div>
+            <small class="text-muted">Score: ${s.score} • CGPA: ${s.cgpa}</small>
+        </div>
+    `).join("");
+}
+
+
+document.getElementById("semFilter").addEventListener("change", async () => {
+
+    const file = document.getElementById("csvFile").files[0];
+    if (!file) return;
+
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("sem", document.getElementById("semFilter").value);
+
+    const res = await fetch("/admin/analysis/upload", {
+        method: "POST",
+        body: fd
+    });
+
+    const js = await res.json();
+    if (!js.success) return alert(js.message);
+
+    analysisResult = js.analysis;
+
+    renderSubjectAverages();   // 🔥 now updated data
+});
+
+function downloadLanguageCSV(){
+
+    if(currentLanguageStudents.length === 0){
+        alert("No students to export.");
+        return;
+    }
+
+    // Get all keys dynamically
+    const headers = Object.keys(currentLanguageStudents[0]);
+
+    let csv = headers.join(",") + "\n";
+
+    currentLanguageStudents.forEach(student => {
+
+        let row = headers.map(h => {
+            let val = student[h];
+
+            if(val === undefined || val === null){
+                return "";
+            }
+
+            return `"${String(val).replace(/"/g,'""')}"`;
+        });
+
+        csv += row.join(",") + "\n";
+    });
+
+    const blob = new Blob([csv], {type:"text/csv"});
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "language_students_full_details.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+</script>
+
+{% endblock %}

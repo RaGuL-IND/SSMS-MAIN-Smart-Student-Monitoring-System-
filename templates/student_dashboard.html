@@ -1,0 +1,361 @@
+{% extends "student_base.html" %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(226, 176, 176, 0.15);
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Layout: "Elephant" */
+    .elephant-profile-container {
+        max-width: 1200px;
+        margin: 2.5rem auto;
+        padding: 0 30px;
+    }
+
+    /* Header: "Giraffe" */
+    .giraffe-welcome {
+        margin-bottom: 3rem;
+        animation: fadeInDown 0.8s ease-out;
+    }
+    .giraffe-welcome h2 { font-size: 3.2rem; font-weight: 900; color: var(--dark); letter-spacing: -2px; }
+    .giraffe-welcome span { color: var(--primary-gold); }
+
+    /* Card Box: "Gazelle" */
+    .gazelle-card {
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        padding: 2.5rem;
+        border-radius: 35px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+        border: 1px solid var(--glass-border);
+        margin-bottom: 2rem;
+    }
+
+    h3 { 
+        font-weight: 800; 
+        color: var(--dark); 
+        display: flex; 
+        align-items: center; 
+        gap: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Table: "Zebra" */
+    .zebra-data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .zebra-data-table td {
+        padding: 15px 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-weight: 600;
+        color: #555;
+    }
+    .zebra-data-table b { color: var(--dark); font-weight: 800; }
+
+    /* Sem Box: "Python" */
+    .python-sem-bar {
+        background: var(--white);
+        padding: 18px 25px;
+        border-radius: 18px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 800;
+        color: var(--dark);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        transition: 0.3s;
+        border: 1px solid transparent;
+    }
+    .python-sem-bar:hover { border-color: var(--primary-gold); transform: translateX(5px); }
+
+    .panel { display: none; padding: 20px; background: #fffdf9; border-radius: 18px; margin-bottom: 20px; }
+
+    /* Button: "Lion" */
+    .lion-btn {
+        background: var(--dark);
+        color: white;
+        padding: 18px;
+        border-radius: 50px;
+        text-align: center;
+        text-decoration: none;
+        font-weight: 800;
+        display: block;
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .lion-btn:hover { background: var(--primary-gold); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(226,176,74,0.3); }
+
+    /* Badge: "Owl" */
+    .owl-pill {
+        background: #fff9e6;
+        color: var(--primary-gold);
+        padding: 4px 12px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+    }
+
+    /* Radar Section */
+    .radar-container { background: white; padding: 30px; border-radius: 30px; margin: 2rem 0; }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="elephant-profile-container">
+
+    <header class="giraffe-welcome">
+        <h2>Welcome, <span>{{ student.Student_Name }}</span></h2>
+        <p style="color: #888; font-weight: 500;">Academic Performance & Skill Intelligence Hub</p>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div class="gazelle-card">
+            <h3>📌 Personal Overview</h3>
+            <table class="zebra-data-table">
+                <tr><td><b>Register Number</b></td><td>{{ student.Register_Number }}</td></tr>
+                <tr><td><b>Department</b></td><td>{{ student.Department }}</td></tr>
+                <tr><td><b>Current Semester</b></td><td><span class="owl-pill">Sem {{ student.Current_Sem }}</span></td></tr>
+                <tr><td><b>CGPA</b></td><td style="color: var(--primary-gold); font-size: 1.2rem;">{{ student.CGPA }}</td></tr>
+                <tr><td><b>Skill Index</b></td><td>{{ student.skill_index }}</td></tr>
+            </table>
+        </div>
+
+        <div class="gazelle-card">
+            <h3>📘 Academic Metrics</h3>
+            <table class="zebra-data-table">
+                <tr><td><b>Language</b></td><td>{{ student.Foreign_Language_Known }}</td></tr>
+                <tr><td><b>Aptitude Avg</b></td><td>{{ student.Weekly_Aptitude_Avg }}</td></tr>
+                <tr><td><b>Communication</b></td><td>{{ student.Avg_Communication_Score }}</td></tr>
+                <tr><td><b>Certifications</b></td><td>{{ student.Number_of_Certifications }}</td></tr>
+                <tr><td><b>LeetCode Solved</b></td><td style="color: #38a169;">{{ student.LeetCode_Problems_Solved }}</td></tr>
+                <tr><td><b>CodeChef Rating</b></td><td style="color: var(--primary-gold);">{{ student.CodeChef_Rating }}</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="gazelle-card">
+        <h3>🏅 Skills & Achievements</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            <div style="padding: 15px; background: #fafafa; border-radius: 15px;">
+                <p style="color: #888; font-size: 0.8rem; margin: 0;">Projects Done</p>
+                <b style="font-size: 1.2rem;">{{ student.Projects_Done }}</b>
+            </div>
+            <div style="padding: 15px; background: #fafafa; border-radius: 15px;">
+                <p style="color: #888; font-size: 0.8rem; margin: 0;">Hackathons</p>
+                <b style="font-size: 1.2rem;">{{ student.Hackathons_Participated }}</b>
+            </div>
+            <div style="padding: 15px; background: #fafafa; border-radius: 15px;">
+                <p style="color: #888; font-size: 0.8rem; margin: 0;">Patents</p>
+                <b style="font-size: 1.2rem;">{{ student.Patents_Granted }}</b>
+            </div>
+        </div>
+    </div>
+<div class="gazelle-card">
+    <h3>📄 Certificates</h3>
+    <p style="color:#777; font-weight:500;">
+        Upload internship, course, or achievement certificates (PDF / Image).
+    </p>
+
+    <div style="display:flex; gap:15px; margin-top:15px;">
+        <a href="{{ url_for('student.upload_certificate') }}" class="lion-btn" style="background:#1a1a1a;">
+            ⬆ Upload Certificate
+        </a>
+
+        <a href="{{ url_for('student.student_certificates') }}" class="lion-btn" style="background:#e2b04a;">
+            📁 View Certificates
+        </a>
+    </div>
+</div>
+<div class="gazelle-card">
+    <h3>📑 Resume Manager</h3>
+
+    <p style="color:#777;font-weight:500;">
+        Upload your existing resume or generate a resume automatically from your student profile.
+    </p>
+
+    <div style="display:flex;gap:15px;margin-top:15px;">
+
+        <a href="{{ url_for('student.upload_resume') }}" class="lion-btn">
+            ⬆ Upload Resume
+        </a>
+
+        <a href="{{ url_for('student.generate_resume') }}" class="lion-btn" style="background:#e2b04a;">
+            ⚡ Generate Resume
+        </a>
+
+    </div>
+</div>
+    <div class="radar-container">
+        <h4 style="font-weight: 800; margin-bottom: 2rem;">📊 Student Skill Radar Profile</h4>
+            <div style="position: relative; height: 320px;">
+    <canvas id="skillRadar"></canvas>
+</div>
+    </div>
+
+    <div class="gazelle-card">
+        <h3>📚 Semester Performance</h3>
+        {% for sem in semesters %}
+            {% set gpa = student.get(sem + "_GPA") %}
+            <div class="python-sem-bar" onclick="toggle('{{ sem }}')">
+                <span>{{ sem }} <small style="color: #888; margin-left: 10px;">GPA: {{ gpa }}</small></span>
+                <span id="arrow-{{sem}}" style="color: var(--primary-gold);">▼</span>
+            </div>
+
+            <div id="{{sem}}" class="panel">
+                <table class="zebra-data-table" style="font-size: 0.9rem;">
+                    <tr style="color: #aaa; text-transform: uppercase; font-size: 0.7rem;">
+                        <th>Subject</th><th>IA1</th><th>IA2</th><th>Model</th><th>Grade</th>
+                    </tr>
+ {% set sub = student[sem + "_Subjects"] %}
+{% set ia1_list = student[sem + "_IA1"] %}
+{% set ia2_list = student[sem + "_IA2"] %}
+{% set model_list = student[sem + "_Model"] %}
+{% set grade_list = student[sem + "_Grades"] %}
+
+                    {% for i in range(sub|length) %}
+                    <tr>
+                        <td><b>{{ sub[i] }}</b></td>
+                        <td>{{ ia1_list[i] }}</td>
+                        <td>{{ ia2_list[i] if i < ia2_list|length else '-' }}</td>
+                        <td>{{ model_list[i] }}</td>
+                        <td><span class="owl-pill">{{ grade_list[i] }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('student.student_drives') }}" class="lion-btn">📢 View Current Career Drives</a>
+
+    <div style="margin-top: 3rem;">
+        <div class="python-sem-bar" onclick="toggle('schemes')" style="background: #ecfdf5; border-color: #10b981;">
+            <span style="color: #065f46;">🟩 Eligible Government Schemes ({{ schemes|length }})</span>
+            <span id="arrow-schemes" style="color: #10b981;">▼</span>
+        </div>
+
+        <div id="schemes" class="panel">
+            {% if schemes %}
+                {% for s in schemes %}
+                    <div class="gazelle-card" style="border-left: 6px solid #10b981; padding: 1.5rem; margin-bottom: 1rem;">
+                        <h5 style="font-weight: 800; margin: 0;">{{ s.name }}</h5>
+                        <p style="font-size: 0.85rem; color: #666;">AI Match Score: <b style="color: var(--primary-gold);">{{ s.probability }}%</b></p>
+                        {% if s.predicted == 1 %}
+                            <p style="color:#10b981; font-weight:bold; font-size: 0.8rem;">✔ Suitable for Your Profile</p>
+                        {% endif %}
+                        <p style="font-size: 0.9rem;">{{ s.benefits }}</p>
+                        <a href="{{ s.apply_link }}" target="_blank" class="lion-btn" style="background: #10b981; padding: 10px; font-size: 0.8rem; display: inline-block;">Apply Now</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">No eligible schemes found at this time.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div style="margin-top: 2rem; margin-bottom: 2rem;">
+        <div class="python-sem-bar" onclick="toggle('weaknesses')" style="background: #fef2f2; border-color: #ef4444;">
+            <span style="color: #991b1b;">💡 Personalized Upskilling Recommendations ({{ weaknesses|length }})</span>
+            <span id="arrow-weaknesses" style="color: #ef4444;">▼</span>
+        </div>
+
+        <div id="weaknesses" class="panel">
+            {% if weaknesses %}
+                <p style="color:#666; font-size:0.9rem; margin-top:0; margin-bottom:1.5rem;">
+                    The following subjects fell below the placement readiness standard (70% average across assessments). We recommend reviewing these courses to improve your placement scores:
+                </p>
+                {% for w in weaknesses %}
+                    <div class="gazelle-card" style="border-left: 6px solid #ef4444; padding: 1.5rem; margin-bottom: 1rem; background: #fffdfd; text-align: left;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                            <h5 style="font-weight: 800; margin: 0; font-size:1.1rem; color:var(--dark);">{{ w.subject }}</h5>
+                            <span class="owl-pill" style="background:#fee2e2; color:#ef4444; font-size: 0.75rem;">{{ w.semester }}</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: #777; margin: 5px 0 10px;">
+                            Your assessment average: <b style="color: #ef4444;">{{ w.avg_percentage }}%</b> (readiness benchmark is 70.0%)
+                        </p>
+                        <p style="font-size: 0.9rem; margin: 10px 0;">
+                            <b>Recommended resource:</b> {{ w.course_name }}
+                        </p>
+                        <a href="{{ w.course_link }}" target="_blank" class="lion-btn" style="background: #ef4444; padding: 10px 20px; font-size: 0.8rem; display: inline-block;">Start Learning Now</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div style="text-align:center; padding:20px;">
+                    <span style="font-size:3rem;">🏆</span>
+                    <h5 style="font-weight: 800; margin: 15px 0 5px; font-size:1.2rem; color:#065f46;">Excellent Academic Record!</h5>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0;">You have no academic weaknesses below the 70% threshold. Keep up the great work!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function scale(value) { 
+        if (typeof value !== 'number' || isNaN(value) || value === null) return 0;
+        return Math.min((value / 10) * 10, 10); 
+    }
+
+    // Ensure the canvas exists and get its 2D drawing context
+    const canvas = document.getElementById('skillRadar');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6'],
+                datasets: [{
+                    label: 'GPA Profile',
+                    data: [
+                        scale({{ student.Sem1_GPA or 0 }}),
+                        scale({{ student.Sem2_GPA or 0 }}),
+                        scale({{ student.Sem3_GPA or 0 }}),
+                        scale({{ student.Sem4_GPA or 0 }}),
+                        scale({{ student.Sem5_GPA or 0 }}),
+                        scale({{ student.Sem6_GPA or 0 }})
+                    ],
+                    fill: true,
+                    backgroundColor: 'rgba(226, 176, 74, 0.2)',
+                    borderColor: '#e2b04a',
+                    pointBackgroundColor: '#e2b04a'
+                }]
+            },
+            options: {
+                scales: { r: { suggestedMin: 0, suggestedMax: 10, ticks: { display: false } } }
+            }
+        });
+    } else {
+        console.warn('skillRadar canvas not found — radar chart will not be rendered.');
+    }
+});
+
+function toggle(id) {
+    let panel = document.getElementById(id);
+    let arrow = document.getElementById("arrow-" + id);
+    if (panel.style.display === "block") {
+        panel.style.display = "none";
+        arrow.innerHTML = "▼";
+    } else {
+        panel.style.display = "block";
+        arrow.innerHTML = "▲";
+    }
+}
+</script>
+
+{% endblock %}

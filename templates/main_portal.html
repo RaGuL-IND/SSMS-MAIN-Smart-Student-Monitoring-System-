@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SMART STUDENT MONITORING SYSTEM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gold: #e2b04a;
+            --primary-gold-hover: #c6952a;
+            --white: #ffffff;
+            --bg-soft: #fcfbf7;
+            --dark: #1a1a1a;
+            --dark-charcoal: #2d2d2d;
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(226, 176, 74, 0.15);
+            --shadow-soft: 0 30px 60px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 40px 85px rgba(226, 176, 74, 0.18);
+        }
+
+        body {
+            background-color: var(--bg-soft);
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient background glow */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            left: -200px;
+            background: radial-gradient(circle, rgba(226, 176, 74, 0.08) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            bottom: -200px;
+            right: -200px;
+            background: radial-gradient(circle, rgba(26, 26, 26, 0.03) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 950px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--dark);
+            letter-spacing: -1.5px;
+            margin: 0 0 10px 0;
+            line-height: 1.1;
+        }
+
+        h1 span {
+            color: var(--primary-gold);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #888;
+            margin: 0;
+        }
+
+        /* Cards Grid */
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .portal-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 35px;
+            padding: 3rem 2.2rem;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 250px;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(226, 176, 74, 0.3);
+        }
+
+        .portal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.4s ease;
+        }
+
+        .portal-card:hover .portal-icon {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .portal-card h4 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            color: var(--dark-charcoal);
+        }
+
+        .portal-card p {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 500;
+            margin: 0 0 1.5rem 0;
+            line-height: 1.4;
+        }
+
+        .arrow-btn {
+            background: var(--dark);
+            color: var(--white);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .portal-card:hover .arrow-btn {
+            background: var(--primary-gold);
+            color: var(--dark);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 850px) {
+            .portal-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            h1 {
+                font-size: 2.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="header-section">
+        <h1>SSMS <span>Intelligence Hub.</span></h1>
+        <h3>Choose Your Access Portal</h3>
+    </div>
+
+    <div class="portal-grid">
+        <!-- Admin Card -->
+        <a class="portal-card" href="{{ url_for('admin.login') }}">
+            <div class="portal-icon">🛡️</div>
+            <div>
+                <h4>Admin Portal</h4>
+                <p>System configuration, analytics upload, index management & drives setup</p>
+            </div>
+            <div class="arrow-btn">→</div>
+        </a>
+
+        <!-- Student Card -->
+        <a class="portal-card" href="{{ url_for('student.login') }}">
+            <div class="portal-icon">🎓</div>
+            <div>
+                <h4>Student Portal</h4>
+                <p>Academic dashboards, course suggestions, exam panels & certificate uploads</p>
+            </div>
+            <div class="arrow-btn">→</div>
+        </a>
+
+        <!-- Company Card -->
+        <a class="portal-card" href="{{ url_for('company.company_login') }}">
+            <div class="portal-icon">🏢</div>
+            <div>
+                <h4>Company Portal</h4>
+                <p>Recruiter access, job postings creation, candidate profiles & eligibility grids</p>
+            </div>
+            <div class="arrow-btn">→</div>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
+

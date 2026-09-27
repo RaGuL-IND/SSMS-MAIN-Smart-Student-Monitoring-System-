@@ -1,0 +1,292 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(226, 176, 176, 0.15);
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Layout Wrapper: "Elephant" */
+    .elephant-profile-wrapper {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 30px;
+    }
+
+    /* Page Header: "Giraffe" */
+    .giraffe-header {
+        margin-bottom: 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .giraffe-header h2 {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--dark);
+        margin: 0;
+        letter-spacing: -1.5px;
+    }
+    .giraffe-header span { color: var(--primary-gold); }
+
+    /* Main Card: "Gazelle" */
+    .gazelle-profile-card {
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        padding: 3rem;
+        border-radius: 35px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+        border: 1px solid var(--glass-border);
+    }
+
+    /* Section Headers */
+    h3 {
+        font-weight: 800;
+        color: var(--dark);
+        border-left: 4px solid var(--primary-gold);
+        padding-left: 15px;
+        margin-top: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Info Table: "Zebra" */
+    .zebra-info-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .zebra-info-table td {
+        padding: 12px 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-weight: 600;
+        color: #555;
+    }
+    .zebra-info-table b { color: var(--dark); font-weight: 800; }
+
+    /* Semester Box: "Python" */
+    .python-sem-box {
+        margin-bottom: 15px;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid #eee;
+        background: white;
+    }
+
+    .semester-header {
+        padding: 20px 25px;
+        background: #fff;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.3s;
+    }
+    .semester-header:hover { background: #fffdf9; }
+
+    .semester-body {
+        display: none;
+        padding: 25px;
+        background: #fafafa;
+        border-top: 1px solid #eee;
+    }
+
+    /* Sub-table: "Ant" */
+    .ant-grade-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .ant-grade-table th {
+        text-align: left;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: #aaa;
+        padding-bottom: 10px;
+    }
+    .ant-grade-table td {
+        padding: 12px 8px;
+        background: white;
+        border-bottom: 1px solid #f0f0f0;
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+
+    /* Button: "Lion" */
+    .lion-back-btn {
+        background: var(--dark);
+        color: white;
+        padding: 14px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 800;
+        display: inline-block;
+        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .lion-back-btn:hover {
+        background: var(--primary-gold);
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(226,176,74,0.3);
+    }
+
+    /* Score Badge: "Owl" */
+    .owl-pill {
+        background: #fff9e6;
+        color: var(--primary-gold);
+        padding: 4px 12px;
+        border-radius: 10px;
+        font-size: 0.85rem;
+    }
+</style>
+
+<div class="elephant-profile-wrapper">
+    {% if student %}
+    
+    <header class="giraffe-header">
+        <div>
+            <span style="color: var(--primary-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem;">Intelligence Dossier</span>
+            <h2>Student <span>Profile.</span></h2>
+        </div>
+        <a href="{{ url_for('admin.view_students') }}" class="lion-back-btn">← Back to List</a>
+    </header>
+
+    <div class="gazelle-profile-card">
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-weight: 900; color: var(--dark); margin: 0; font-size: 2.2rem;">{{ student.Student_Name }}</h1>
+                <p style="color: var(--primary-gold); font-weight: 800; margin-top: 5px;">Reg: {{ student.Register_Number }}</p>
+            </div>
+            <div style="text-align: right;">
+                <span class="owl-pill" style="font-size: 1.2rem; padding: 10px 20px;">CGPA: {{ student.CGPA }}</span>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+            <div>
+                <table class="zebra-info-table">
+                    <tr><td><b>Batch</b></td><td>{{ student.Batch }}</td></tr>
+                    <tr><td><b>Department</b></td><td>{{ student.Department }}</td></tr>
+                    <tr><td><b>Current Semester</b></td><td>Sem {{ student.Current_Sem }}</td></tr>
+                    <tr><td><b>Skill Index</b></td><td><span class="owl-pill">{{ student.skill_index }}</span></td></tr>
+                </table>
+            </div>
+
+            <div>
+                <table class="zebra-info-table">
+                    <tr><td><b>Language</b></td><td>{{ student.Foreign_Language_Known }}</td></tr>
+                    <tr><td><b>Aptitude Avg</b></td><td>{{ student.Weekly_Aptitude_Avg }}</td></tr>
+                    <tr><td><b>Communication</b></td><td>{{ student.Avg_Communication_Score }}</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <h3>💻 Coding & Technical Profile</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+            <table class="zebra-info-table">
+                <tr><td><b>Certifications</b></td><td>{{ student.Number_of_Certifications }}</td></tr>
+                <tr><td><b>LeetCode Solved</b></td><td style="color: #38a169;">{{ student.LeetCode_Problems_Solved }}</td></tr>
+            </table>
+            <table class="zebra-info-table">
+                <tr><td><b>CodeChef Rating</b></td><td style="color: var(--primary-gold);">{{ student.CodeChef_Rating }}</td></tr>
+                <tr><td><b>Cert List</b></td><td style="font-size: 0.8rem;">{{ student.Certifications_List }}</td></tr>
+            </table>
+        </div>
+
+        <h3>📚 Semester Performance</h3>
+        <div class="semester-section">
+            {% for sem in semesters %}
+            {% set gpa_key = sem + '_GPA' %}
+            {% set subjects = student.get(sem + '_Subjects', '') %}
+            {% set ia1 = student.get(sem + '_IA1', '') %}
+            {% set ia2 = student.get(sem + '_IA2', '') %}
+            {% set model = student.get(sem + '_Model', '') %}
+            {% set grades = student.get(sem + '_Grades', '') %}
+
+            <div class="python-sem-box">
+                <div class="semester-header" onclick="toggleSemester('{{ sem }}')">
+                    <span style="font-weight: 800; color: var(--dark);">
+                        {{ sem|capitalize }} <small style="color: var(--primary-gold); margin-left: 10px;">GPA: {{ student[gpa_key] if gpa_key in student else 'N/A' }}</small>
+                    </span>
+                    <span class="arrow" id="arrow-{{ sem }}" style="color: var(--primary-gold);">▼</span>
+                </div>
+
+                <div class="semester-body" id="{{ sem }}">
+                    <table class="ant-grade-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>IA1</th>
+                                <th>IA2</th>
+                                <th>Model</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set subject_list = (subjects|string).split(',') if subjects else [] %}
+                            {% set ia1_list = (ia1|string).split(',') if ia1 else [] %}
+                            {% set ia2_list = (ia2|string).split(',') if ia2 else [] %}
+                            {% set model_list = (model|string).split(',') if model else [] %}
+                            {% set grade_list = (grades|string).split(',') if grades else [] %}
+
+                            {% for i in range(subject_list|length) %}
+                            <tr>
+                                <td style="color: var(--dark);">{{ subject_list[i] }}</td>
+                                <td>{{ ia1_list[i] if ia1_list|length > i else '-' }}</td>
+                                <td>{{ ia2_list[i] if ia2_list|length > i else '-' }}</td>
+                                <td>{{ model_list[i] if model_list|length > i else '-' }}</td>
+                                <td><span class="owl-pill">{{ grade_list[i] if grade_list|length > i else '-' }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3>🏅 Skills & Achievements</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+            <div style="background: #fafafa; padding: 20px; border-radius: 15px;">
+                <p style="font-size: 0.7rem; color: #999; margin-bottom: 5px;">PROJECTS</p>
+                <b style="font-size: 1.2rem;">{{ student.Projects_Done }}</b>
+            </div>
+            <div style="background: #fafafa; padding: 20px; border-radius: 15px;">
+                <p style="font-size: 0.7rem; color: #999; margin-bottom: 5px;">PATENTS</p>
+                <b style="font-size: 1.2rem;">{{ student.Patents_Granted }}</b>
+            </div>
+            <div style="background: #fafafa; padding: 20px; border-radius: 15px;">
+                <p style="font-size: 0.7rem; color: #999; margin-bottom: 5px;">HACKATHONS</p>
+                <b style="font-size: 1.2rem;">{{ student.Hackathons_Participated }}</b>
+            </div>
+        </div>
+
+    </div>
+
+    {% else %}
+    <div class="gazelle-profile-card" style="text-align: center; padding: 100px;">
+        <p style="color: #e11d48; font-weight: 800;">Student data not found in the master database.</p>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function toggleSemester(sem) {
+    const body = document.getElementById(sem);
+    const arrow = document.getElementById('arrow-' + sem);
+    if (body.style.display === "block") {
+        body.style.display = "none";
+        arrow.innerHTML = "▼";
+    } else {
+        body.style.display = "block";
+        arrow.innerHTML = "▲";
+    }
+}
+</script>
+
+{% endblock %}

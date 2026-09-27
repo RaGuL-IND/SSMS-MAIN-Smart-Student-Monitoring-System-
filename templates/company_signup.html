@@ -1,0 +1,218 @@
+{% extends "company_base.html" %}
+
+{% block title %}Company HR Signup{% endblock %}
+
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(226, 176, 176, 0.15);
+    }
+
+    body { 
+        background-color: var(--bg-soft); 
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 40px 0;
+    }
+
+    /* Container: "Elephant" */
+    .elephant-signup-container {
+        width: 100%;
+        max-width: 650px;
+        padding: 20px;
+    }
+
+    /* Card: "Gazelle" */
+    .gazelle-signup-card {
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        padding: 4rem 3.5rem;
+        border-radius: 40px;
+        box-shadow: 0 40px 80px rgba(0,0,0,0.06);
+        border: 1px solid var(--glass-border);
+        animation: slideUpFade 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    /* Header: "Giraffe" */
+    .giraffe-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .giraffe-header h2 {
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: var(--dark);
+        letter-spacing: -1.5px;
+        margin: 10px 0;
+    }
+
+    .giraffe-header span { color: var(--primary-gold); }
+
+    /* Input Grid Layout: "Leopard" */
+    .leopard-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        text-align: left;
+    }
+
+    .panther-group { margin-bottom: 20px; }
+    
+    /* For full-width inputs in the grid */
+    .panther-full { grid-column: span 2; }
+
+    .panther-label {
+        font-weight: 800;
+        color: #888;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        margin-left: 5px;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .panther-input {
+        width: 100%;
+        padding: 15px 20px;
+        border-radius: 16px;
+        border: 1px solid #eee;
+        background: rgba(255, 255, 255, 0.7);
+        font-family: inherit;
+        font-weight: 600;
+        color: var(--dark);
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    .panther-input:focus {
+        border-color: var(--primary-gold);
+        background: var(--white);
+        box-shadow: 0 10px 25px rgba(226, 176, 74, 0.1);
+        transform: translateY(-2px);
+    }
+
+    /* Button: "Lion" */
+    .lion-signup-btn {
+        background: var(--dark);
+        color: var(--white);
+        width: 100%;
+        padding: 18px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        margin-top: 15px;
+    }
+
+    .lion-signup-btn:hover {
+        background: var(--primary-gold);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(226, 176, 74, 0.35);
+    }
+
+    /* Footer Links: "Falcon" */
+    .falcon-footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 0.95rem;
+        color: #888;
+        font-weight: 500;
+    }
+
+    .falcon-link {
+        color: var(--primary-gold);
+        text-decoration: none;
+        font-weight: 800;
+        margin-left: 5px;
+    }
+
+    .falcon-link:hover { text-decoration: underline; }
+
+    @keyframes slideUpFade {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive adjustment */
+    @media (max-width: 600px) {
+        .leopard-form-grid { grid-template-columns: 1fr; }
+        .panther-full { grid-column: span 1; }
+    }
+</style>
+
+<div class="elephant-signup-container">
+    <div class="gazelle-signup-card">
+        
+        <header class="giraffe-header">
+            <div style="font-size: 3.5rem;">📝</div>
+            <h2>Create HR <span>Account.</span></h2>
+            <p style="color: #aaa; font-weight: 500;">Join the placement intelligence network</p>
+        </header>
+
+        <form method="POST">
+            <div class="leopard-form-grid">
+                
+                <div class="panther-group panther-full">
+                    <label class="panther-label">Company Name</label>
+                    <input type="text" name="company_name" class="panther-input" placeholder="e.g. Google India" required>
+                </div>
+
+                <div class="panther-group">
+                    <label class="panther-label">Full Name</label>
+                    <input type="text" name="hr_name" class="panther-input" placeholder="John Doe" required>
+                </div>
+
+                <div class="panther-group">
+                    <label class="panther-label">HR Position</label>
+                    <input type="text" name="position" class="panther-input" placeholder="e.g. Talent Acquisition">
+                </div>
+
+                <div class="panther-group panther-full">
+                    <label class="panther-label">Work Email Address</label>
+                    <input type="email" name="email" class="panther-input" placeholder="hr@company.com" required>
+                </div>
+
+                <div class="panther-group">
+                    <label class="panther-label">Phone Number</label>
+                    <input type="text" name="phone" class="panther-input" placeholder="+91 00000 00000">
+                </div>
+
+                <div class="panther-group">
+                    <label class="panther-label">Password</label>
+                    <input type="password" name="password" class="panther-input" placeholder="••••••••" required>
+                </div>
+
+            </div>
+
+            <button type="submit" class="lion-signup-btn">
+                Register Partner Account
+            </button>
+
+            <div class="falcon-footer">
+                Already part of the hub? 
+                <a href="{{ url_for('company.company_login') }}" class="falcon-link">Log in here</a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

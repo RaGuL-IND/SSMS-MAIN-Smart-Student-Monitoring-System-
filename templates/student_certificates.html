@@ -1,0 +1,29 @@
+{% extends "student_base.html" %}
+{% block content %}
+
+<div class="elephant-profile-container">
+    <div class="gazelle-card">
+        <h3>📁 My Certificates</h3>
+
+        {% if certs %}
+        <table class="zebra-data-table">
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Remarks</th>
+            </tr>
+            {% for c in certs %}
+            <tr>
+                <td>{{ c.certificate_name }}</td>
+                <td><span class="owl-pill">{{ c.status }}</span></td>
+                <td>{{ c.remarks or "-" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p style="color:#777;">No approved certificates yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends "company_base.html" %}
+
+{% block title %}Company Login{% endblock %}
+
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(226, 176, 176, 0.15);
+    }
+
+    body { 
+        background-color: var(--bg-soft); 
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    /* Layout Wrapper: "Elephant" */
+    .elephant-login-container {
+        width: 100%;
+        max-width: 450px;
+        padding: 20px;
+    }
+
+    /* Premium Login Card: "Gazelle" */
+    .gazelle-login-card {
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 3.5rem 3rem;
+        border-radius: 40px;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+        border: 1px solid var(--glass-border);
+        text-align: center;
+        animation: floatIn 1s ease-out;
+    }
+
+    /* Header: "Giraffe" */
+    .giraffe-header h2 {
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--dark);
+        margin-bottom: 5px;
+        letter-spacing: -1px;
+    }
+    .giraffe-header span { color: var(--primary-gold); }
+
+    /* Inputs: "Panther" */
+    .panther-group {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .panther-label {
+        font-weight: 800;
+        color: #888;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-left: 5px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .panther-input {
+        width: 100%;
+        padding: 16px 20px;
+        border-radius: 18px;
+        border: 1px solid #eee;
+        background: rgba(255, 255, 255, 0.6);
+        font-family: inherit;
+        font-weight: 600;
+        color: var(--dark);
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    .panther-input:focus {
+        border-color: var(--primary-gold);
+        background: var(--white);
+        box-shadow: 0 10px 25px rgba(226, 176, 74, 0.1);
+    }
+
+    /* Button: "Lion" */
+    .lion-login-btn {
+        background: var(--dark);
+        color: var(--white);
+        width: 100%;
+        padding: 18px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        margin-top: 15px;
+    }
+
+    .lion-login-btn:hover {
+        background: var(--primary-gold);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(226, 176, 74, 0.3);
+    }
+
+    /* Link: "Falcon" */
+    .falcon-footer {
+        margin-top: 25px;
+        font-size: 0.9rem;
+        color: #888;
+        font-weight: 500;
+    }
+
+    .falcon-link {
+        color: var(--primary-gold);
+        text-decoration: none;
+        font-weight: 800;
+        transition: 0.3s;
+    }
+
+    .falcon-link:hover {
+        text-decoration: underline;
+    }
+
+    @keyframes floatIn {
+        from { opacity: 0; transform: translateY(40px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+</style>
+
+<div class="elephant-login-container">
+    <div class="gazelle-login-card">
+        
+        <header class="giraffe-header">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🏢</div>
+            <h2>Partner <span>Login.</span></h2>
+            <p style="color: #aaa; font-size: 0.9rem; font-weight: 500; margin-bottom: 35px;">Welcome back to the Intelligence Hub</p>
+        </header>
+
+        <form method="POST">
+
+            <div class="panther-group">
+                <label class="panther-label">HR Email Address</label>
+                <input type="email" name="email" class="panther-input" placeholder="name@company.com" required>
+            </div>
+
+            <div class="panther-group">
+                <label class="panther-label">Security Password</label>
+                <input type="password" name="password" class="panther-input" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="lion-login-btn">
+                Access Dashboard
+            </button>
+
+            <div class="falcon-footer">
+                Don't have a partner account? 
+                <a href="{{ url_for('company.company_signup') }}" class="falcon-link">Sign up</a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

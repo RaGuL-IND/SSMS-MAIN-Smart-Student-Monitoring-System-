@@ -1,0 +1,283 @@
+{% extends "student_base.html" %}
+{% block content %}
+
+<style>
+    .resume-shell {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px 60px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .resume-hero {
+        background: linear-gradient(135deg, #fffdf6 0%, #ffffff 55%, #fff7dd 100%);
+        border: 1px solid rgba(226, 176, 74, 0.18);
+        border-radius: 28px;
+        padding: 36px;
+        box-shadow: 0 20px 50px rgba(26, 26, 26, 0.08);
+        display: grid;
+        grid-template-columns: 1.25fr 0.9fr;
+        gap: 24px;
+        align-items: center;
+    }
+
+    .resume-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: rgba(226, 176, 74, 0.14);
+        color: #8a6412;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 18px;
+    }
+
+    .resume-title {
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        line-height: 1.05;
+        margin: 0 0 14px;
+        color: #1a1a1a;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+    }
+
+    .resume-copy {
+        color: #666;
+        font-size: 1rem;
+        line-height: 1.7;
+        margin: 0 0 24px;
+        max-width: 640px;
+    }
+
+    .resume-points {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .resume-points li {
+        background: #fff;
+        border: 1px solid rgba(26, 26, 26, 0.08);
+        border-radius: 18px;
+        padding: 16px 18px;
+        color: #404040;
+        font-weight: 600;
+        box-shadow: 0 10px 24px rgba(26, 26, 26, 0.04);
+    }
+
+    .resume-panel {
+        background: #1a1a1a;
+        color: #fff;
+        border-radius: 26px;
+        padding: 28px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .resume-panel::before {
+        content: "";
+        position: absolute;
+        inset: auto -20% -35% auto;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(circle, rgba(226, 176, 74, 0.35), transparent 65%);
+    }
+
+    .panel-card {
+        position: relative;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 22px;
+        padding: 18px;
+        margin-bottom: 14px;
+    }
+
+    .panel-card strong {
+        display: block;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #f0d082;
+        margin-bottom: 8px;
+    }
+
+    .panel-card span {
+        color: rgba(255, 255, 255, 0.88);
+        line-height: 1.6;
+    }
+
+    .upload-card {
+        margin-top: 28px;
+        background: #fff;
+        border-radius: 28px;
+        padding: 32px;
+        border: 1px solid rgba(226, 176, 74, 0.16);
+        box-shadow: 0 20px 40px rgba(26, 26, 26, 0.06);
+    }
+
+    .upload-grid {
+        display: grid;
+        grid-template-columns: 1fr 0.95fr;
+        gap: 24px;
+        align-items: start;
+    }
+
+    .field-label {
+        display: block;
+        font-size: 0.92rem;
+        font-weight: 800;
+        color: #1a1a1a;
+        margin-bottom: 10px;
+    }
+
+    .file-drop {
+        border: 2px dashed rgba(226, 176, 74, 0.6);
+        background: linear-gradient(180deg, #fffdf7, #fff);
+        border-radius: 24px;
+        padding: 26px;
+    }
+
+    .file-drop input[type="file"] {
+        width: 100%;
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid #e5e7eb;
+        background: #fff;
+        color: #444;
+    }
+
+    .upload-help {
+        margin-top: 12px;
+        color: #777;
+        line-height: 1.7;
+        font-size: 0.95rem;
+    }
+
+    .resume-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+    }
+
+    .resume-btn {
+        border: none;
+        border-radius: 999px;
+        padding: 14px 24px;
+        font-weight: 800;
+        font-size: 0.95rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .resume-btn-primary {
+        background: #e2b04a;
+        color: #1a1a1a;
+        box-shadow: 0 14px 28px rgba(226, 176, 74, 0.28);
+    }
+
+    .resume-btn-secondary {
+        background: #1a1a1a;
+        color: #fff;
+    }
+
+    .tip-list {
+        margin: 0;
+        padding-left: 18px;
+        color: #555;
+        line-height: 1.8;
+    }
+
+    @media (max-width: 900px) {
+        .resume-hero,
+        .upload-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .resume-points {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="resume-shell">
+    <section class="resume-hero">
+        <div>
+            <div class="resume-kicker">Resume Desk</div>
+            <h1 class="resume-title">Upload a polished resume that matches your placement profile.</h1>
+            <p class="resume-copy">
+                Keep your resume ready for admin review and company screening. Use this section to upload your own file,
+                or go back and generate a professional profile-based resume from the student dashboard.
+            </p>
+            <ul class="resume-points">
+                <li>White-and-gold student portal experience for a cleaner workflow</li>
+                <li>Faster admin review with a consistent saved resume record</li>
+                <li>Best for PDF resumes with final formatting already checked</li>
+                <li>Works alongside the auto-generated resume feature</li>
+            </ul>
+        </div>
+
+        <div class="resume-panel">
+            <div class="panel-card">
+                <strong>Recommended Format</strong>
+                <span>Use a one-page PDF with clear headings, concise bullets, and measurable achievements.</span>
+            </div>
+            <div class="panel-card">
+                <strong>Best For MNC Screening</strong>
+                <span>Highlight CGPA, projects, coding profiles, internships, certifications, and role-relevant technical skills.</span>
+            </div>
+            <div class="panel-card" style="margin-bottom:0;">
+                <strong>Quick Reminder</strong>
+                <span>Name your file neatly and avoid photos, bright colors, or long paragraphs in the final version.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="upload-card">
+        <div class="upload-grid">
+            <div>
+                <h3 style="margin:0 0 10px; font-size:1.6rem; color:#1a1a1a;">Upload Resume</h3>
+                <p style="margin:0 0 24px; color:#6b7280; line-height:1.7;">
+                    Submit your latest resume here. The file will be stored in the portal and can be included in the admin CSV export.
+                </p>
+
+                <form method="POST" enctype="multipart/form-data">
+                    <label class="field-label" for="resume">Resume File</label>
+                    <div class="file-drop">
+                        <input id="resume" type="file" name="resume" accept=".pdf,.doc,.docx" required>
+                        <p class="upload-help">
+                            Preferred: PDF. Accepted for upload: PDF, DOC, DOCX. Keep the content ATS-friendly and professionally formatted.
+                        </p>
+                    </div>
+
+                    <div class="resume-actions">
+                        <button type="submit" class="resume-btn resume-btn-primary">Upload Resume</button>
+                        <a href="{{ url_for('student.dashboard') }}" class="resume-btn resume-btn-secondary">Back to Dashboard</a>
+                    </div>
+                </form>
+            </div>
+
+            <div style="background:#fcfbf7; border-radius:24px; padding:24px; border:1px solid rgba(26,26,26,0.06);">
+                <h4 style="margin:0 0 14px; color:#1a1a1a; font-size:1.1rem;">What makes a strong fresher resume</h4>
+                <ul class="tip-list">
+                    <li>Start with a short summary focused on software, analytics, AI, or your target role.</li>
+                    <li>Show your strongest academic metrics like CGPA, semester, and department clearly.</li>
+                    <li>Add projects with impact, tools used, and outcomes instead of generic descriptions.</li>
+                    <li>Keep coding profiles, certificates, and hackathons relevant to the job role.</li>
+                    <li>Use simple black text, strong alignment, and clean spacing for recruiter readability.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.8);
+        --glass-border: rgba(226, 176, 74, 0.2);
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Main Container: "Elephant" */
+    .elephant-assign-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 40px;
+    }
+
+    /* Header: "Giraffe" */
+    .giraffe-header {
+        margin-bottom: 3.5rem;
+    }
+    .giraffe-header h1 {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--dark);
+        margin: 0;
+        letter-spacing: -1.5px;
+    }
+    .giraffe-header span { color: var(--primary-gold); }
+
+    /* Form Grid: "Leopard" */
+    .leopard-test-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+        margin-bottom: 3rem;
+    }
+
+    /* Test Card: "Gazelle" */
+    .gazelle-test-card {
+        background: var(--white);
+        padding: 30px;
+        border-radius: 28px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+        transition: all 0.4s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gazelle-test-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(226, 176, 74, 0.1);
+        border-color: var(--primary-gold);
+    }
+
+    .test-icon {
+        width: 50px;
+        height: 50px;
+        background: #fff9e6;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-weight: 800;
+        color: var(--dark);
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+    }
+
+    /* File Upload Area: "Fox" */
+    .fox-upload-box {
+        background: #fcfcfc;
+        border: 2px dashed #eee;
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+        margin-top: 15px;
+        transition: 0.3s;
+    }
+
+    .fox-upload-box:hover {
+        border-color: var(--primary-gold);
+        background: #fffdf9;
+    }
+
+    .current-file-badge {
+        font-size: 0.8rem;
+        color: var(--primary-gold);
+        background: #fff9e6;
+        padding: 5px 12px;
+        border-radius: 8px;
+        font-weight: 700;
+        display: inline-block;
+        margin-bottom: 10px;
+        word-break: break-all;
+    }
+
+    /* Submit Button: "Lion" */
+    .lion-save-btn {
+        background: var(--dark);
+        color: white;
+        padding: 18px 45px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: block;
+        margin: 0 auto;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .lion-save-btn:hover {
+        background: var(--primary-gold);
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(226, 176, 74, 0.3);
+    }
+
+    input[type="file"] {
+        font-size: 0.8rem;
+        color: #888;
+    }
+</style>
+
+<div class="elephant-assign-container">
+    <header class="giraffe-header">
+        <span style="font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem; color: var(--primary-gold);">Test Management</span>
+        <h1>Assign Tests: <span>{{ drive.company_name }}</span></h1>
+    </header>
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="leopard-test-grid">
+            
+            <div class="gazelle-test-card">
+                <div class="test-icon">📘</div>
+                <h3>Aptitude Test</h3>
+                <p style="color: #888; font-size: 0.9rem; flex-grow: 1;">Logical reasoning and quantitative analysis question bank.</p>
+                
+                <div class="fox-upload-box">
+                    {% if drive.aptitude_test_link and (drive.aptitude_test_link | string) != "nan" %}
+                        <span class="current-file-badge">📄 {{ (drive.aptitude_test_link | string).replace("internal:", "") }}</span>
+                        <p style="font-size: 0.75rem; font-weight: 600; color: #bbb; margin-bottom: 5px;">Replace File:</p>
+                    {% else %}
+                        <p style="font-size: 0.75rem; font-weight: 600; color: #bbb; margin-bottom: 5px;">Upload Question Bank:</p>
+                    {% endif %}
+                    <input type="file" name="aptitude_test" accept=".csv">
+                </div>
+            </div>
+
+            <div class="gazelle-test-card">
+                <div class="test-icon">🧠</div>
+                <h3>Domain Test</h3>
+                <p style="color: #888; font-size: 0.9rem; flex-grow: 1;">Core technical concepts and subject-specific knowledge.</p>
+                
+                <div class="fox-upload-box">
+                    {% if drive.domain_test_link and (drive.domain_test_link | string) != "nan" %}
+                        <span class="current-file-badge">📄 {{ (drive.domain_test_link | string).replace("internal:", "") }}</span>
+                        <p style="font-size: 0.75rem; font-weight: 600; color: #bbb; margin-bottom: 5px;">Replace File:</p>
+                    {% else %}
+                        <p style="font-size: 0.75rem; font-weight: 600; color: #bbb; margin-bottom: 5px;">Upload Question Bank:</p>
+                    {% endif %}
+                    <input type="file" name="domain_test" accept=".csv">
+                </div>
+            </div>
+
+            <div class="gazelle-test-card">
+                <div class="test-icon">💻</div>
+                <h3>Coding Test</h3>
+                <p style="color: #888; font-size: 0.9rem; flex-grow: 1;">Competitive programming and algorithmic challenges.</p>
+                
+                <div class="fox-upload-box">
+                    {% if drive.coding_test_link and (drive.coding_test_link | string) != "nan" %}
+                        <span class="current-file-badge">📄 {{ (drive.coding_test_link | string).replace("internal:", "") }}</span>
+                        <p style="font-size: 0.75rem; font-weight: 600; color: #bbb; margin-bottom: 5px;">Replace File:</p>
+                    {% else %}
+                        <p style="font-size: 0.75rem; font-weight: 600; color: #bbb; margin-bottom: 5px;">Upload Question Bank:</p>
+                    {% endif %}
+                    <input type="file" name="coding_test" accept=".csv">
+                </div>
+            </div>
+
+        </div>
+
+        <button type="submit" class="lion-save-btn">
+            Save & Finalize Tests
+        </button>
+    </form>
+</div>
+
+{% endblock %}

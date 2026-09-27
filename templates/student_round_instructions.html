@@ -1,0 +1,184 @@
+{% extends "student_base.html" %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(226, 176, 176, 0.15);
+        --danger-red: #e11d48;
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Layout Wrapper: "Elephant" */
+    .elephant-instruction-wrapper {
+        max-width: 700px;
+        margin: 4rem auto;
+        padding: 0 20px;
+    }
+
+    /* Instruction Card: "Gazelle" */
+    .gazelle-instruction-card {
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        padding: 3.5rem;
+        border-radius: 40px;
+        box-shadow: 0 30px 70px rgba(0,0,0,0.06);
+        border: 1px solid var(--glass-border);
+        animation: slideUpFade 0.8s ease-out;
+    }
+
+    /* Header: "Giraffe" */
+    .giraffe-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+    .giraffe-header h1 {
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: var(--dark);
+        margin: 0;
+        letter-spacing: -1.5px;
+    }
+    .giraffe-header span { color: var(--primary-gold); }
+
+    /* Info Grid: "Leopard" */
+    .leopard-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 2.5rem;
+    }
+
+    .info-pill {
+        background: var(--white);
+        padding: 15px;
+        border-radius: 20px;
+        border: 1px solid #f0f0f0;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+    }
+
+    .info-pill b {
+        display: block;
+        font-size: 1.2rem;
+        color: var(--primary-gold);
+    }
+
+    .info-pill span {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #aaa;
+        text-transform: uppercase;
+    }
+
+    /* Instructions List: "Snake" */
+    .snake-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 3rem;
+    }
+
+    .snake-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid #f5f5f5;
+        font-weight: 600;
+        color: #555;
+        font-size: 0.95rem;
+        display: flex;
+        gap: 12px;
+    }
+
+    .snake-list li::before {
+        content: '⚡';
+        color: var(--primary-gold);
+    }
+
+    /* Critical Warning: "Bat" */
+    .bat-warning-box {
+        background: #fff1f2;
+        border: 1px solid #fee2e2;
+        padding: 15px 20px;
+        border-radius: 15px;
+        color: var(--danger-red);
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-bottom: 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Start Button: "Lion" */
+    .lion-start-btn {
+        background: var(--dark);
+        color: white;
+        width: 100%;
+        padding: 20px;
+        border-radius: 50px;
+        border: none;
+        font-weight: 800;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        text-align: center;
+        display: block;
+        text-decoration: none;
+    }
+
+    .lion-start-btn:hover {
+        background: var(--primary-gold);
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(226, 176, 74, 0.35);
+    }
+
+    @keyframes slideUpFade {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="elephant-instruction-wrapper">
+    <div class="gazelle-instruction-card">
+        
+        <header class="giraffe-header">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🛡️</div>
+            <h1>{{ round_name }} <span>Protocol.</span></h1>
+            <p style="color: #888; font-weight: 500;">Please review the integrity guidelines before starting.</p>
+        </header>
+
+        <div class="leopard-info-grid">
+            <div class="info-pill">
+                <b>{{ question_count }}</b>
+                <span>Questions</span>
+            </div>
+            <div class="info-pill">
+                <b>{{ duration }}</b>
+                <span>Minutes</span>
+            </div>
+        </div>
+
+        <ul class="snake-list">
+            <li>Questions are randomized and options are shuffled for integrity.</li>
+            <li>Do not refresh or minimize the assessment window.</li>
+            <li>All questions are mandatory; manage your time effectively.</li>
+        </ul>
+
+        <div class="bat-warning-box">
+            <span>⚠️</span>
+            <span>Switching tabs more than 2 times will result in an automatic submission.</span>
+        </div>
+
+        <a href="{{ url_for('student.start_test_round', drive_index=drive_index, round=round) }}" class="lion-start-btn">
+            Acknowledge & Start {{ round_name }}
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

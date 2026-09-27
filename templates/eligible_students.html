@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% block title %}Eligible Students{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(226, 176, 176, 0.15);
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Layout Wrapper: "Elephant" */
+    .elephant-eligible-container {
+        max-width: 1300px;
+        margin: 2rem auto;
+        padding: 0 30px;
+    }
+
+    /* Header: "Giraffe" */
+    .giraffe-header {
+        margin-bottom: 3rem;
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    .giraffe-header h1 {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--dark);
+        margin: 0;
+        letter-spacing: -1.5px;
+    }
+
+    .giraffe-header span { color: var(--primary-gold); }
+
+    /* Card Box: "Gazelle" */
+    .gazelle-eligible-card {
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        padding: 2.5rem;
+        border-radius: 35px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+        border: 1px solid var(--glass-border);
+    }
+
+    /* Sort Control: "Panther" */
+    .panther-sort-box {
+        background: #fff;
+        padding: 20px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 2rem;
+        border: 1px solid #eee;
+        width: fit-content;
+    }
+
+    .panther-select {
+        padding: 10px 20px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        font-weight: 700;
+        color: var(--dark);
+        outline: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .panther-select:focus { border-color: var(--primary-gold); }
+
+    /* Table: "Zebra" */
+    .zebra-eligible-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 12px;
+    }
+
+    .zebra-eligible-table th {
+        color: #999;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        padding: 0 20px;
+        font-weight: 800;
+    }
+
+    .zebra-eligible-table td {
+        background: var(--white);
+        padding: 20px;
+        font-weight: 600;
+        color: var(--dark);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+
+    .zebra-eligible-table tr td:first-child { border-radius: 16px 0 0 16px; color: #888; }
+    .zebra-eligible-table tr td:last-child { border-radius: 0 16px 16px 0; }
+
+    .zebra-eligible-table tr:hover td {
+        background: #fffef9;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(226, 176, 74, 0.1);
+        transition: 0.3s ease;
+    }
+
+    /* Button: "Lion" */
+    .lion-btn {
+        background: var(--dark);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.8rem;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: inline-block;
+    }
+
+    .lion-btn:hover {
+        background: var(--primary-gold);
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(226, 176, 74, 0.3);
+    }
+
+    /* Badge: "Owl" */
+    .owl-pill {
+        background: #fff9e6;
+        color: var(--primary-gold);
+        padding: 5px 12px;
+        border-radius: 10px;
+        font-weight: 800;
+        font-size: 0.8rem;
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="elephant-eligible-container">
+    
+    <header class="giraffe-header">
+        <span style="color: var(--primary-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.75rem;">Eligibility Match</span>
+        <h1>Eligible Students: <span>{{ company.company_name }}</span></h1>
+        <p style="color: #888; margin-top: 5px; font-weight: 500;">
+            Targeting Domain: <strong style="color: var(--dark);">{{ company.domain_required }}</strong>
+        </p>
+    </header>
+
+    <div class="gazelle-eligible-card">
+        
+        {% if students|length == 0 %}
+            <div style="text-align: center; padding: 60px; background: #fff1f2; border-radius: 20px; border: 1px solid #fee2e2;">
+                <p style="color: #e11d48; font-weight: 800; font-size: 1.1rem; margin: 0;">⚠️ No eligible students found for this drive.</p>
+            </div>
+        {% else %}
+            
+            <form method="get" class="panther-sort-box">
+                <label style="font-weight: 800; font-size: 0.85rem; color: #555;">SORT BY SKILL INDEX</label>
+                <select name="sort" class="panther-select" onchange="this.form.submit()">
+                    <option value="none" {% if sort_order=='none' %}selected{% endif %}>Default</option>
+                    <option value="asc" {% if sort_order=='asc' %}selected{% endif %}>Lowest First ↑</option>
+                    <option value="desc" {% if sort_order=='desc' %}selected{% endif %}>Highest First ↓</option>
+                </select>
+            </form>
+
+            <div style="overflow-x: auto;">
+                <table class="zebra-eligible-table">
+                    <thead>
+                        <tr>
+                            <th>Reg Number</th>
+                            <th>Student Name</th>
+                            <th>Batch</th>
+                            <th>Department</th>
+                            <th>Sem</th>
+                            <th>CGPA</th>
+                            <th>Skill Index</th>
+                            <th>Profile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in students %}
+                        <tr>
+                            <td>#{{ s.Register_Number }}</td>
+                            <td style="font-weight: 800; color: var(--dark);">{{ s.Student_Name }}</td>
+                            <td><span class="owl-pill">{{ s.Batch }}</span></td>
+                            <td>{{ s.Department }}</td>
+                            <td>Sem {{ s.Current_Sem }}</td>
+                            <td style="color: var(--primary-gold); font-weight: 800;">{{ s.CGPA }}</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 40px; height: 6px; background: #eee; border-radius: 10px; overflow: hidden;">
+                                        <div style="width: {{ s.skill_index }}%; height: 100%; background: var(--primary-gold);"></div>
+                                    </div>
+                                    {{ s.skill_index }}
+                                </div>
+                            </td>
+                            <td>
+                                <a href="/student/{{ s.Register_Number }}" class="lion-btn">
+                                    View Profile
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

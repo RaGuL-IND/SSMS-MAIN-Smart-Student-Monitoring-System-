@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .cert-container {
+        max-width: 1100px;
+        margin: 2.5rem auto;
+        padding: 0 30px;
+    }
+
+    .cert-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .cert-header h2 {
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--dark);
+        letter-spacing: -1.5px;
+        margin: 0;
+    }
+
+    .cert-header h2 span { color: var(--primary-gold); }
+
+    .cert-header p {
+        color: #888;
+        font-weight: 500;
+        margin-top: 6px;
+        font-size: 1rem;
+    }
+
+    /* ── Card ── */
+    .cert-card {
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(226,176,74,0.12);
+        border-radius: 28px;
+        padding: 2rem 2.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.04);
+        display: grid;
+        grid-template-columns: 1fr 1fr auto auto;
+        gap: 1.5rem;
+        align-items: center;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .cert-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 30px 60px rgba(226,176,74,0.1);
+        border-color: rgba(226,176,74,0.25);
+    }
+
+    .cert-student-name {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--dark);
+        margin: 0 0 4px 0;
+    }
+
+    .cert-reg {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #aaa;
+        background: #f5f5f5;
+        padding: 3px 10px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    .cert-name {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--dark);
+    }
+
+    .cert-date {
+        font-size: 0.8rem;
+        color: #bbb;
+        font-weight: 500;
+        margin-top: 4px;
+    }
+
+    /* ── View link ── */
+    .view-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #f5f5f5;
+        color: var(--dark);
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+    .view-link:hover {
+        background: var(--dark);
+        color: white;
+    }
+
+    .no-file {
+        font-size: 0.82rem;
+        color: #ccc;
+        font-weight: 600;
+    }
+
+    /* ── Inline Review Form ── */
+    .review-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 220px;
+    }
+
+    .review-form input[type="text"] {
+        background: #f9f9f9;
+        border: 1.5px solid #eee;
+        padding: 10px 16px;
+        border-radius: 14px;
+        font-weight: 600;
+        font-family: inherit;
+        font-size: 0.85rem;
+        outline: none;
+        transition: all 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .review-form input[type="text"]:focus {
+        border-color: var(--primary-gold);
+        background: white;
+        box-shadow: 0 0 10px rgba(226,176,74,0.15);
+    }
+
+    .review-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-approve {
+        background: #1a1a1a;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex: 1;
+    }
+    .btn-approve:hover {
+        background: #2ecc71;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(46,204,113,0.3);
+    }
+
+    .btn-reject {
+        background: #f5f5f5;
+        color: #888;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex: 1;
+    }
+    .btn-reject:hover {
+        background: #e74c3c;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(231,76,60,0.3);
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: rgba(255,255,255,0.85);
+        border-radius: 28px;
+        border: 1px solid rgba(226,176,74,0.12);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.04);
+    }
+
+    .empty-state .icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: var(--dark);
+        margin: 0 0 8px 0;
+    }
+
+    .empty-state p {
+        color: #aaa;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    /* ── Counter badge ── */
+    .count-badge {
+        background: var(--primary-gold);
+        color: var(--dark);
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 900;
+        display: inline-block;
+        margin-left: 10px;
+        vertical-align: middle;
+    }
+
+    @media (max-width: 850px) {
+        .cert-card {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="cert-container">
+    <div class="cert-header">
+        <h2>Certificate <span>Approvals.</span>
+            {% if certs %}
+                <span class="count-badge">{{ certs|length }} Pending</span>
+            {% endif %}
+        </h2>
+        <p>Review and approve student certificate submissions</p>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="background:#fff9e6; border-left:4px solid var(--primary-gold); border-radius:14px; padding:14px 20px; margin-bottom:1.5rem; font-weight:700; color:#7a6026;">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% if certs %}
+        {% for c in certs %}
+        <div class="cert-card">
+
+            <!-- Student Info -->
+            <div>
+                <p class="cert-student-name">{{ c.student_name }}</p>
+                <span class="cert-reg">{{ c.register_number }}</span>
+            </div>
+
+            <!-- Certificate Info -->
+            <div>
+                <div class="cert-name">📜 {{ c.certificate_name }}</div>
+                <div class="cert-date">Uploaded: {{ c.uploaded_at }}</div>
+            </div>
+
+            <!-- View File -->
+            <div>
+                {% if c.file_path %}
+                    <a href="{{ url_for('admin.view_certificate_file', filename=c.file_path) }}"
+                       target="_blank" class="view-link">
+                        📎 View
+                    </a>
+                {% else %}
+                    <span class="no-file">No file</span>
+                {% endif %}
+            </div>
+
+            <!-- Review Form -->
+            <div>
+                <form method="POST"
+                      action="{{ url_for('admin.review_certificate', cert_id=c.certificate_id) }}"
+                      class="review-form">
+
+                    <input type="text" name="remarks" placeholder="Add remarks…" required>
+
+                    <div class="review-actions">
+                        <button type="submit" name="action" value="approve" class="btn-approve">
+                            ✅ Approve
+                        </button>
+                        <button type="submit" name="action" value="reject" class="btn-reject">
+                            ❌ Reject
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    {% else %}
+        <div class="empty-state">
+            <div class="icon">🎉</div>
+            <h3>All Clear!</h3>
+            <p>No pending certificate approvals at the moment.</p>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

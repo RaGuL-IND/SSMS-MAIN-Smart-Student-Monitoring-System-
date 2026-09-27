@@ -1,0 +1,354 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(226, 176, 176, 0.15);
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    .search-container {
+        max-width: 1000px;
+        margin: 2.5rem auto;
+        padding: 0 30px;
+    }
+
+    .welcome-header {
+        margin-bottom: 2.5rem;
+    }
+    .welcome-header h2 { font-size: 2.8rem; font-weight: 900; color: var(--dark); letter-spacing: -1.5px; margin: 0; }
+    .welcome-header span { color: var(--primary-gold); }
+
+    .search-card {
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        padding: 2.5rem;
+        border-radius: 30px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+        border: 1px solid var(--glass-border);
+        margin-bottom: 2rem;
+    }
+
+    .search-textarea {
+        width: 100%;
+        height: 120px;
+        padding: 20px;
+        border-radius: 18px;
+        border: 1.5px solid #e0e0e0;
+        background: #fdfdfd;
+        font-family: inherit;
+        font-size: 1.05rem;
+        color: var(--dark);
+        resize: vertical;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+        transition: 0.3s;
+        box-sizing: border-box;
+    }
+    .search-textarea:focus {
+        outline: none;
+        border-color: var(--primary-gold);
+        box-shadow: 0 0 10px rgba(226, 176, 74, 0.2);
+        background: #fff;
+    }
+
+    .search-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .results-count-control {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        color: #555;
+    }
+
+    .results-select {
+        padding: 10px 18px;
+        border-radius: 12px;
+        border: 1.5px solid #e0e0e0;
+        background: white;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .action-btn {
+        background: var(--dark);
+        color: white;
+        padding: 15px 35px;
+        border-radius: 50px;
+        font-weight: 800;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .action-btn:hover {
+        background: var(--primary-gold);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(226,176,74,0.3);
+    }
+
+    .secondary-btn {
+        background: #e2b04a;
+        color: black;
+    }
+    .secondary-btn:hover {
+        background: var(--dark);
+        color: white;
+        box-shadow: 0 10px 20px rgba(26,26,26,0.15);
+    }
+
+    /* Result list */
+    .result-item {
+        display: flex;
+        align-items: center;
+        background: white;
+        border-radius: 20px;
+        padding: 20px 25px;
+        margin-bottom: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+        border: 1.5px solid transparent;
+        transition: 0.3s;
+    }
+    .result-item:hover {
+        border-color: var(--primary-gold);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(226, 176, 74, 0.08);
+    }
+
+    .match-badge {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #fff9e6;
+        color: var(--primary-gold);
+        font-size: 1.25rem;
+        font-weight: 900;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid var(--primary-gold);
+        margin-right: 25px;
+        flex-shrink: 0;
+    }
+    .match-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #b77a1a;
+        margin-top: 2px;
+    }
+
+    .student-details {
+        flex-grow: 1;
+    }
+    .student-name {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--dark);
+        margin: 0 0 6px 0;
+    }
+    .student-meta {
+        font-size: 0.9rem;
+        color: #777;
+        font-weight: 600;
+    }
+    .student-meta span {
+        margin-right: 15px;
+        display: inline-block;
+    }
+
+    .actions-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .icon-link {
+        padding: 10px 18px;
+        border-radius: 12px;
+        background: #fafafa;
+        color: var(--dark);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.85rem;
+        border: 1px solid #e0e0e0;
+        transition: 0.2s;
+    }
+    .icon-link:hover {
+        background: var(--dark);
+        color: white;
+        border-color: var(--dark);
+    }
+    
+    .loading-overlay {
+        display: none;
+        text-align: center;
+        padding: 30px;
+        font-weight: 800;
+        color: var(--dark);
+    }
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid var(--primary-gold);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 15px;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<div class="search-container">
+    <header class="welcome-header">
+        <h2>AI Resume <span>Semantic Search</span></h2>
+        <p style="color: #888; font-weight: 500; margin-top: 5px;">Find candidate resumes match conceptually using neural embeddings and FAISS similarity indexing.</p>
+    </header>
+
+    <div class="search-card">
+        <form id="searchForm" method="post" action="{{ url_for('admin.resume_search_query') }}">
+            <h3>🔍 Conceptual Job Search</h3>
+            <p style="color: #777; font-size: 0.9rem; margin-top: -10px; margin-bottom: 1.5rem;">Describe the ideal candidate skills, project keywords, or job responsibilities in natural language.</p>
+            
+            <textarea class="search-textarea" name="query" placeholder="e.g., Python backend engineer with Flask API experience, SQL database knowledge, and React frontend exposure..." required></textarea>
+            
+            <div class="search-controls">
+                <div class="results-count-control">
+                    <span>Number of candidates to show:</span>
+                    <select class="results-select" name="top_k">
+                        <option value="3">3 Candidates</option>
+                        <option value="5" selected>5 Candidates</option>
+                        <option value="10">10 Candidates</option>
+                        <option value="20">20 Candidates</option>
+                    </select>
+                </div>
+                
+                <div class="actions-group">
+                    <button type="button" class="action-btn secondary-btn" id="btnRebuild">
+                        🔄 Rebuild Index
+                    </button>
+                    <button type="submit" class="action-btn">
+                        🚀 Search Resumes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Spinner overlay for rebuilding index / searching -->
+    <div id="loadingOverlay" class="search-card loading-overlay">
+        <div class="spinner"></div>
+        <span id="loadingMessage">Processing search embeddings...</span>
+    </div>
+
+    <!-- Search Results -->
+    <div id="resultsCard" class="search-card" style="display: none;">
+        <h3 id="resultsHeading">🎯 Matching Profiles</h3>
+        <div id="resultsContainer">
+            <!-- Dynamically populated via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const searchForm = document.getElementById("searchForm");
+    const btnRebuild = document.getElementById("btnRebuild");
+    const loadingOverlay = document.getElementById("loadingOverlay");
+    const loadingMessage = document.getElementById("loadingMessage");
+    const resultsCard = document.getElementById("resultsCard");
+    const resultsContainer = document.getElementById("resultsContainer");
+
+    searchForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        // Show loading spinner
+        resultsCard.style.display = "none";
+        loadingMessage.textContent = "Computing neural embeddings and searching FAISS index...";
+        loadingOverlay.style.display = "block";
+
+        const formData = new FormData(searchForm);
+        
+        fetch(searchForm.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            loadingOverlay.style.display = "none";
+            resultsContainer.innerHTML = "";
+            
+            if (data.success && data.results.length > 0) {
+                data.results.forEach((r, idx) => {
+                    const itemHtml = `
+                        <div class="result-item">
+                            <div class="match-badge">
+                                <div>${Math.round(r.score)}%</div>
+                                <div class="match-label">Match</div>
+                            </div>
+                            <div class="student-details">
+                                <h4 class="student-name">${r.student_name}</h4>
+                                <div class="student-meta">
+                                    <span><b>Reg No:</b> ${r.register_number}</span>
+                                    <span><b>Dept:</b> ${r.department || 'N/A'}</span>
+                                    <span><b>CGPA:</b> ${r.cgpa || 'N/A'}</span>
+                                    <span><b>Skill Index:</b> ${r.skill_index || 'N/A'}</span>
+                                </div>
+                            </div>
+                            <div class="actions-group">
+                                <a href="/admin/student/${r.register_number}" class="icon-link">👤 Profile</a>
+                                <a href="/admin/resumes/view/${r.filename}" class="icon-link" target="_blank">📄 View Resume</a>
+                            </div>
+                        </div>
+                    `;
+                    resultsContainer.innerHTML += itemHtml;
+                });
+                resultsCard.style.display = "block";
+            } else {
+                resultsContainer.innerHTML = `<p style="color:#777; text-align:center; padding: 20px;">No matching candidate resumes found. Try rebuilding the search index.</p>`;
+                resultsCard.style.display = "block";
+            }
+        })
+        .catch(err => {
+            loadingOverlay.style.display = "none";
+            alert("Error running semantic search: " + err);
+        });
+    });
+
+    btnRebuild.addEventListener("click", function () {
+        resultsCard.style.display = "none";
+        loadingMessage.textContent = "Scanning resume folder, parsing PDFs, and rebuilding vector index...";
+        loadingOverlay.style.display = "block";
+
+        fetch("{{ url_for('admin.resume_rebuild_index') }}", {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            loadingOverlay.style.display = "none";
+            alert(data.message);
+        })
+        .catch(err => {
+            loadingOverlay.style.display = "none";
+            alert("Error rebuilding index: " + err);
+        });
+    });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}Company Drives{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --bg-soft: #fcfbf7;
+        --white: #ffffff;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.7);
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Main Container: "Elephant" */
+    .elephant-drive-container {
+        max-width: 1300px;
+        margin: 2rem auto;
+        padding: 0 20px;
+    }
+
+    /* Header Section: "Giraffe" */
+    .giraffe-header {
+        margin-bottom: 3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    /* Grid Layout: "Leopard" */
+    .leopard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 25px;
+    }
+
+    /* Premium Drive Card: "Gazelle" */
+    .gazelle-drive-card {
+        background: var(--white);
+        border-radius: 24px;
+        padding: 25px;
+        border: 1px solid rgba(226, 176, 74, 0.15);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gazelle-drive-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(226, 176, 74, 0.12);
+        border-color: var(--primary-gold);
+    }
+
+    /* Floating Badge: "Owl" */
+    .owl-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #fff9e6;
+        color: var(--primary-gold);
+        padding: 5px 15px;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+    }
+
+    .drive-id { color: #aaa; font-size: 0.8rem; font-weight: 600; }
+    .company-name { font-size: 1.5rem; font-weight: 900; color: var(--dark); margin: 5px 0; }
+    .position-tag { color: var(--primary-gold); font-weight: 700; margin-bottom: 15px; display: block; }
+
+    /* Data Rows */
+    .data-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #f8f8f8;
+        font-size: 0.9rem;
+    }
+    .data-label { color: #888; font-weight: 500; }
+    .data-value { color: var(--dark); font-weight: 700; }
+
+    /* Action Buttons: "Lion" */
+    .lion-btn-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .lion-btn {
+        padding: 12px;
+        border-radius: 14px;
+        text-align: center;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-students { background: #f4f4f4; color: var(--dark); }
+    .btn-test { background: var(--dark); color: white; }
+
+    .lion-btn:hover {
+        transform: scale(1.03);
+        filter: brightness(1.1);
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .gazelle-drive-card { animation: fadeInUp 0.5s ease backwards; }
+</style>
+
+<div class="elephant-drive-container">
+    
+    <div class="giraffe-header">
+        <div>
+            <span style="color: var(--primary-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Placement Portal</span>
+            <h1 style="font-size: 2.8rem; font-weight: 950; color: var(--dark); margin: 5px 0 0 0;">Company <span style="color: var(--primary-gold);">Drives.</span></h1>
+            <p style="color: #888; margin-top: 10px;">All newly created company drives will appear here.</p>
+        </div>
+    </div>
+
+    {% if drives.empty %}
+        <div class="gazelle-card" style="text-align: center; padding: 100px;">
+            <p class="text-muted">No drives posted yet.</p>
+        </div>
+    {% else %}
+        <div class="leopard-grid">
+            {% for i, row in drives.iterrows() %}
+            <div class="gazelle-drive-card" style="animation-delay: {{ loop.index0 * 0.1 }}s">
+                <div class="owl-badge">{{ row.package }}</div>
+                
+                <span class="drive-id">#{{ row.drive_id }}</span>
+                <h2 class="company-name">{{ row.company_name }}</h2>
+                <span class="position-tag">{{ row.position }}</span>
+
+                <div class="data-row">
+                    <span class="data-label">Required</span>
+                    <span class="data-value">{{ row.number_required }} Students</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Domain</span>
+                    <span class="data-value">{{ row.domain_required }}</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Period</span>
+                    <span class="data-value">{{ row.time_period }} Months</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Deadline</span>
+                    <span class="data-value" style="color: #e11d48;">{{ row.end_date }}</span>
+                </div>
+                
+                <div style="margin-top: 15px; font-size: 0.75rem; color: #bbb;">
+                    Posted on: {{ row.created_at }}
+                </div>
+
+                <div class="lion-btn-group">
+                    <a href="/drives/{{ loop.index0 }}" class="lion-btn btn-students">
+                        👥 Students
+                    </a>
+                    <a href="{{ url_for('admin.admin_assign_test', drive_index=i) }}" class="lion-btn btn-test">
+                        📝 Assign Test
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

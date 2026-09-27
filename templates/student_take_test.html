@@ -1,0 +1,283 @@
+{% extends "student_base.html" %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.9);
+        --glass-border: rgba(226, 176, 176, 0.2);
+    }
+
+    body { 
+        background-color: var(--bg-soft); 
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        user-select: none; /* Prevents text selection */
+    }
+
+    /* FULLSCREEN OVERLAY: "Bat" */
+    #fullscreen-start {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: var(--bg-soft); z-index: 9999; 
+        display: flex; flex-direction: column;
+        justify-content: center; align-items: center; text-align: center;
+        backdrop-filter: blur(10px);
+    }
+
+    /* Exam Container: "Elephant" */
+    .elephant-exam-wrapper {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 20px;
+    }
+
+    /* Header Bar: "Giraffe" */
+    .giraffe-exam-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--dark);
+        padding: 15px 30px;
+        border-radius: 20px;
+        color: white;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    /* Question Card: "Gazelle" */
+    .gazelle-question-card {
+        background: var(--glass);
+        padding: 40px;
+        border-radius: 30px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+        min-height: 350px;
+        position: relative;
+    }
+
+    /* Options: "Panther" */
+    .panther-option {
+        background: white;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        border: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: 0.2s;
+        font-weight: 600;
+    }
+
+    .panther-option:hover {
+        border-color: var(--primary-gold);
+        background: #fffdf9;
+    }
+
+    .panther-option input[type="radio"] {
+        accent-color: var(--primary-gold);
+        transform: scale(1.2);
+    }
+
+    /* Control Buttons: "Lion" */
+    .lion-btn {
+        padding: 14px 28px;
+        border-radius: 50px;
+        border: none;
+        font-weight: 800;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-nav { background: #eee; color: #555; }
+    .btn-nav:hover { background: #e0e0e0; }
+
+    .btn-submit { 
+        background: var(--primary-gold); 
+        color: white; 
+        box-shadow: 0 10px 20px rgba(226, 176, 74, 0.3);
+    }
+
+    .btn-start {
+        background: var(--dark); color: white;
+        padding: 18px 40px; font-size: 1.2rem;
+    }
+
+    .btn-start:hover { background: var(--primary-gold); transform: scale(1.05); }
+
+    .timer-box {
+        background: rgba(255,255,255,0.1);
+        padding: 8px 15px;
+        border-radius: 10px;
+        font-family: monospace;
+        font-size: 1.2rem;
+        color: var(--primary-gold);
+        font-weight: bold;
+    }
+
+    .q-count { color: #aaa; font-weight: 700; font-size: 0.9rem; margin-top: 20px; }
+</style>
+
+<div id="fullscreen-start">
+    <div style="font-size: 4rem; margin-bottom: 20px;">🔒</div>
+    <h2 style="font-weight: 900; letter-spacing: -1px; margin-bottom: 10px;">Security Protocol Initialized</h2>
+    <p style="color: #888; margin-bottom: 30px; max-width: 400px;">This assessment requires Full-Screen Mode. Anti-cheating measures are active.</p>
+
+    <button onclick="enterFullScreen()" class="lion-btn btn-start">
+        Enter Assessment Mode
+    </button>
+</div>
+
+<div class="elephant-exam-wrapper">
+    <header class="giraffe-exam-header">
+        <div style="font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">
+            {{ round|capitalize }} Assessment
+        </div>
+        <div class="timer-box">
+            ⏱️ <span id="timer">--:--</span>
+        </div>
+    </header>
+
+    <div class="gazelle-question-card">
+        <div id="question-container">
+            </div>
+
+        <form id="testForm" method="POST" action="{{ url_for('student.submit_round', drive_index=drive_index, round=round) }}">
+            <input type="hidden" name="answers_json" id="answers_json">
+            <input type="hidden" name="proctor_token" value="{{ proctor_token }}">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px; border-top: 1px solid #eee; padding-top: 25px;">
+                <button type="button" id="prevBtn" class="lion-btn btn-nav">← Previous</button>
+                <div id="submit-container">
+                    <button type="button" id="nextBtn" class="lion-btn btn-submit" style="background: var(--dark);">Next Question →</button>
+                    <button type="submit" id="submitBtn" class="lion-btn btn-submit" style="display:none;">Finish & Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// ========================================================================
+// FULLSCREEN & ANTI-CHEAT (LOGIC PRESERVED)
+// ========================================================================
+function enterFullScreen() {
+    let el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    document.getElementById("fullscreen-start").style.display = "none";
+}
+
+document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) {
+        alert("⚠️ Full screen is required for the test!");
+        enterFullScreen();
+    }
+});
+
+let tabSwitchCount = 0;
+document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+        tabSwitchCount++;
+        if (tabSwitchCount >= 3) {
+            alert("⚠️ Cheating detected! Test will be auto-submitted.");
+            autoSubmit();
+        }
+    }
+});
+
+function autoSubmit() {
+    saveAnswer();
+    document.getElementById("answers_json").value = JSON.stringify(answers);
+    let cheatField = document.createElement("input");
+    cheatField.type = "hidden"; cheatField.name = "cheated"; cheatField.value = "1";
+    document.getElementById("testForm").appendChild(cheatField);
+    document.getElementById("testForm").submit();
+}
+
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey || e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I") || (e.ctrlKey && e.key === "U") || e.key === "Escape") {
+        e.preventDefault();
+    }
+});
+
+// ========================================================================
+// MAIN TEST ENGINE (LOGIC PRESERVED)
+// ========================================================================
+const QUESTIONS = {{ questions | tojson }};
+const TOTAL = QUESTIONS.length;
+let current = 0;
+let answers = Array(TOTAL).fill(null);
+
+function renderQuestion() {
+    const q = QUESTIONS[current];
+    let html = `<h2 style="font-weight: 800; line-height: 1.4; margin-bottom: 30px;">${current + 1}. ${q.q}</h2>`;
+
+    q.options.forEach((opt, index) => {
+        const checked = answers[current] === index ? "checked" : "";
+        html += `
+            <label class="panther-option">
+                <input type="radio" name="option" value="${index}" ${checked}>
+                ${opt}
+            </label>
+        `;
+    });
+
+    html += `<div class="q-count">QUESTION ${current + 1} OF ${TOTAL}</div>`;
+    document.getElementById("question-container").innerHTML = html;
+    updateButtons();
+}
+
+function updateButtons() {
+    document.getElementById("prevBtn").style.visibility = (current === 0) ? "hidden" : "visible";
+    document.getElementById("nextBtn").style.display = (current === TOTAL - 1) ? "none" : "flex";
+    document.getElementById("submitBtn").style.display = (current === TOTAL - 1) ? "flex" : "none";
+}
+
+function saveAnswer() {
+    const selected = document.querySelector("input[name='option']:checked");
+    if (selected) { answers[current] = parseInt(selected.value); }
+}
+
+document.getElementById("nextBtn").onclick = function () {
+    saveAnswer();
+    if (current < TOTAL - 1) { current++; renderQuestion(); }
+};
+
+document.getElementById("prevBtn").onclick = function () {
+    saveAnswer();
+    if (current > 0) { current--; renderQuestion(); }
+};
+
+document.getElementById("testForm").onsubmit = function (e) {
+    saveAnswer();
+    let notAnswered = answers.filter(a => a === null).length;
+    if (notAnswered > 0) {
+        e.preventDefault();
+        alert("⚠️ You must answer ALL questions before submitting!\nUnanswered: " + notAnswered);
+        return false;
+    }
+    document.getElementById("answers_json").value = JSON.stringify(answers);
+};
+
+let duration = {{ duration_minutes }} * 60;
+function updateTimer() {
+    let min = Math.floor(duration / 60);
+    let sec = duration % 60;
+    document.getElementById("timer").innerText = `${min}m ${sec}s`;
+    if (duration <= 0) { autoSubmit(); }
+    duration--;
+}
+setInterval(updateTimer, 1000);
+renderQuestion();
+</script>
+
+{% endblock %}

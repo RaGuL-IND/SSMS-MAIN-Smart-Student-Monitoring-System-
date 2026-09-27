@@ -1,0 +1,201 @@
+Difficulty,Category,Question,OptionA,OptionB,OptionC,OptionD,Answer
+Easy,Algebra,"If x-y=3 and y=2, what is x?",1,2,3,5,D
+Easy,Geometry,What is the measure of each interior angle of a regular hexagon?,120°,150°,135°,140°,A
+Hard,Application of TSD,"A car at 72 km/h travels for 0.5 hour, then 10 km at 60 km/h. Total time?",1 hr,1.17 hr,1.25 hr,1.5 hr,B
+Hard,Algebra,"If x^2 - 5x + 6 = 0, what are the roots?",2 and 3,1 and 6,3 and 4,2 and 6,A
+Easy,Ratios,Ratio of 15 to 45?,01:03,03:01,01:02,02:01,A
+Easy,Averages,The average speed for 2 hours at 40 km/h and 1 hour at 60 km/h?,40,46.6,50,52,B
+Easy,Algebra,"If x-y=3 and y=2, what is x?",1,2,3,5,D
+Easy,Blood Relations,"If John is Mary’s son, how is Mary related to John?",Sister,Mother,Father,Daughter,B
+Medium,Ratios,Split ₹120 in 3:2:1.,"60,40,20","30,60,30","50,40,30","40,60,20",A
+Hard,HCF & LCM,"Find largest number that divides 65, 81, and 119 leaving same remainder.",7,9,13,17,B
+Hard,Coding-Decoding,"If BALL is written as 2133 and WALL as 5233, how is BOWL written?",2135,2132,2133,5235,A
+Hard,Geometry,Find the sum of the exterior angles of any polygon.,360°,180°,90°,120°,A
+Medium,Algebra,"If x^2=25, what are the values of x?",1 and -1,5 and -5,2 and -2,10 and -10,B
+Easy,Percentages,20 is what percent of 100?,10,15,20,25,C
+Easy,Date & Time,"If Oct 2, 2025 is Thursday, what is day on Oct 6, 2025?",Friday,Saturday,Monday,Tuesday,C
+Hard,Time & Work,"A, B, C together complete a work in 4 days. C does as much as A and B together. Days for C alone?",8,12,6,5,A
+Hard,Percentages,120 is what percent less than 200?,40,50,25,60,A
+Easy,Profit & Loss,"Loss percent: cost ₹150, sold ₹120?",10%,15%,20%,25%,C
+Hard,HCF & LCM,"Find largest number that divides 65, 81, and 119 leaving same remainder.",7,9,13,17,B
+Hard,Percentages,A number is first increased by 10% and then by 20%. Total % increase?,32,30,28,25,A
+Hard,Simple Interest,SI on ₹1500 for 5yrs @ 6%.,₹450,₹300,₹400,₹500,A
+Hard,Blood Relations,"If T is the sister of U, U is the son of V, V is married to W, how is W related to T?",Mother,Aunt,Sister,Father,A
+Easy,Averages,The average speed for 2 hours at 40 km/h and 1 hour at 60 km/h?,40,46.6,50,52,B
+Easy,Mixtures & Alligation,"Mix 4 litres milk and 6 litres water, ratio?",02:03,03:02,01:02,02:01,A
+Hard,Percentages,Successive discounts of 10% and 20% is equivalent to a single discount of?,28,30,25,27,A
+Easy,Averages,"Average weight of three people 55kg, 60kg, 65kg?",60,59,62,61,A
+Hard,HCF & LCM,"GCD(2^3*3^2*5, 2^2*3*5^2)",10,30,45,90,B
+Medium,Vocabulary,"What does ""aggregate"" mean?",To divide,A whole,A sum,To kidnap,B
+Hard,Percentages,Which number is 25% more than 40?,45,55,50,60,C
+Hard,Mixtures & Alligation,"If 3kg mixture is 20% salt, how much pure salt to add for 30% solution?",0.5kg,0.7kg,0.8kg,1kg,B
+Hard,Application of TSD,"A car at 72 km/h travels for 0.5 hour, then 10 km at 60 km/h. Total time?",1 hr,1.17 hr,1.25 hr,1.5 hr,B
+Hard,Percentages,"If a number is increased by 40% and then decreased by 20%, what is the net change %?",12,10,15,20,A
+Hard,Algebra,"If x + y = 10 and x^2 + y^2 = 58, what is xy?",21,25,14,29,A
+Hard,Percentages,"60% of students are boys and 40% are girls. If there are 30 girls, how many students?",60,75,50,80,B
+Hard,Pattern Recognition,"What is the missing number: 3, 9, __, 81, 243?",27,18,36,54,A
+Easy,Date & Time,"If Oct 2, 2025 is Thursday, what is day on Oct 6, 2025?",Friday,Saturday,Monday,Tuesday,C
+Hard,Percentages,"If a number is increased by 40% and then decreased by 20%, what is the net change %?",12,10,15,20,A
+Medium,Date & Time,A clock shows 4:30. What is the angle between hour and minute hands?,75°,60°,45°,90°,A
+Easy,Averages,The average speed for 2 hours at 40 km/h and 1 hour at 60 km/h?,40,46.6,50,52,B
+Easy,Ratios,What is the simplest form of 24:36?,01:02,02:03,03:02,04:03,B
+Hard,Mixtures & Alligation,"Solution A has 30% sugar, B has 10%. Mixing in 4:1 ratio, final %?",24,26,28,23,A
+Medium,Application of TSD,"A runner reaches 10 min late at 12 km/h, 10 min early at 15 km/h. Distance?",15 km,20 km,30 km,25 km,B
+Easy,Date & Time,How many days are there in a leap year?,365,366,367,364,B
+Hard,HCF & LCM,"GCD(2^3*3^2*5, 2^2*3*5^2)",10,30,45,90,B
+Hard,Percentages,"If sugar price increases by 25%, how much % must consumption be reduced to keep expenditure same?",20,22,25,30,A
+Hard,Application of TSD,A cyclist covers 40 km at 20 km/h and returns at 10 km/h. What is the average speed?,13.33 km/h,15 km/h,12 km/h,17 km/h,A
+Hard,Profit & Loss,Sell at 20% profit after 10% discount. Mark up %?,33.33,25,30,37.5,C
+Hard,HCF & LCM,"Numbers are in ratio 2:3, HCF is 12. Numbers are?","24,36","12,18","36,54","15,45",A
+Hard,Percentages,120 is what percent less than 200?,40,50,25,60,A
+Hard,Blood Relations,"If T is the sister of U, U is the son of V, V is married to W, how is W related to T?",Mother,Aunt,Sister,Father,A
+Hard,HCF & LCM,"LCM of two numbers is 120 and HCF is 6. If one number is 24, the other?",36,30,36,18,B
+Easy,Geometry,Find the perimeter of a rectangle with length 8 cm and breadth 5 cm.,26 cm,30 cm,40 cm,18 cm,A
+Easy,Coding-Decoding,"If FOCUS is written as GPDVT, how is TABLE written?",UBCMF,UBCMF,UBCMF,UBCMD,A
+Hard,Profit & Loss,"Loss %: Cost ₹400, sold ₹320 after 10% damage?",20%,18%,22%,25%,A
+Medium,Simple Interest,Rate for SI ₹60 in 2yr on ₹600?,5%,7%,6%,8%,C
+Hard,HCF & LCM,Find the HCF of 324 and 192.,6,12,24,36,C
+Medium,Mixtures & Alligation,Mix 1 litre 20% alcohol and 2 litres 50%. Final %?,40,45,50,35,A
+Hard,Synonyms,"Find a synonym for ""cautious"".",Brave,Careful,Swift,Flashy,B
+Medium,Algebra,"If x^2=25, what are the values of x?",1 and -1,5 and -5,2 and -2,10 and -10,B
+Easy,Date & Time,How many days are there in a leap year?,365,366,367,364,B
+Easy,Profit & Loss,"Loss percent: cost ₹150, sold ₹120?",10%,15%,20%,25%,C
+Medium,Date & Time,"If Jan 1, 2019 was Tuesday, what day is Jan 1, 2020?",Tuesday,Wednesday,Monday,Thursday,B
+Hard,Percentages,The value of a machine depreciated 10% per year for 2 years. Original value = 20000. Find current value.,16200,18000,16220,17200,A
+Medium,Algebra,"If x^2 + 6x + 9=0, then x=?",0,-1,-3,3,C
+Medium,Profit & Loss,"Sold for ₹180, gained 20%. CP?",₹150,₹160,₹170,₹172,A
+Hard,Percentages,The value of a machine depreciated 10% per year for 2 years. Original value = 20000. Find current value.,16200,18000,16220,17200,A
+Hard,Time & Work,"A, B work together; can do a work in 8 days. A alone in 12. B need how many days alone?",24,16,18,32,A
+Easy,Antonyms,"Choose the antonym of ""slow"".",Rapid,Tardy,Sluggish,Unhurried,A
+Easy,Mixtures & Alligation,Mix 2kg rice @₹30/kg and 3kg @₹50/kg. Avg price?,42,43,44,45,C
+Hard,Application of TSD,A cyclist covers 40 km at 20 km/h and returns at 10 km/h. What is the average speed?,13.33 km/h,15 km/h,12 km/h,17 km/h,A
+Medium,Geometry,A circle has area 154 cm². What is its radius? (π=22/7),7 cm,9 cm,11 cm,14 cm,A
+Hard,Vocabulary,"To ""abdicate"" means?",To confront,To humiliate,To give up leadership,To gather,C
+Hard,Application of TSD,"A car at 72 km/h travels for 0.5 hour, then 10 km at 60 km/h. Total time?",1 hr,1.17 hr,1.25 hr,1.5 hr,B
+Hard,Simple Interest,Rate for SI ₹64 on ₹800 for 2yrs?,4%,5%,6%,8%,A
+Hard,HCF & LCM,"Find LCM of 16, 24, and 36.",144,288,216,432,B
+Easy,Coding-Decoding,"If FOCUS is written as GPDVT, how is TABLE written?",UBCMF,UBCMF,UBCMF,UBCMD,A
+Hard,Percentages,120 is what percent less than 200?,40,50,25,60,A
+Medium,Averages,A car travels 60 km at 40 km/h and returns at 60 km/h. Find average speed?,48,50,52,54,A
+Medium,Percentages,"If a number is increased by 10%, what is it multiplied by?",1.1,0.1,0.9,2,A
+Medium,Blood Relations,M is the daughter of N. N is the wife of R. How is M related to R?,Daughter,Wife,Mother,Sister,A
+Easy,Vocabulary,"What does ""abate"" mean?",To increase,To humiliate,To reduce,To gather,C
+Hard,Percentages,"If a number is increased by 40% and then decreased by 20%, what is the net change %?",12,10,15,20,A
+Hard,Application of TSD,"A car at 72 km/h travels for 0.5 hour, then 10 km at 60 km/h. Total time?",1 hr,1.17 hr,1.25 hr,1.5 hr,B
+Medium,Synonyms,"Pick the synonym of ""colourful"".",Monochrome,Vibrant,Achromatic,Ashen,B
+Hard,Pattern Recognition,"Which pattern fits: 2, 6, 12, 20, ?",28,30,36,42,A
+Hard,HCF & LCM,"GCD(2^3*3^2*5, 2^2*3*5^2)",10,30,45,90,B
+Easy,Ratios,Divide 20 by ratio 2:3.,08:12,12:08,16:04,10:10,A
+Hard,Profit & Loss,Sell at 20% profit after 10% discount. Mark up %?,33.33,25,30,37.5,C
+Hard,HCF & LCM,"Find largest number that divides 65, 81, and 119 leaving same remainder.",7,9,13,17,B
+Hard,Blood Relations,"If A is the mother of B and B is the father of C, how is A related to C?",Mother,Grandmother,Aunt,Sister,B
+Medium,Date & Time,What time will it be 150 minutes past 10:15 AM?,12:45 PM,1:05 PM,1:15 PM,12:05 PM,A
+Medium,Pattern Recognition,"What comes next? 5, 10, 20, 40, ?",60,80,100,120,B
+Hard,Date & Time,"If a clock is 15 minutes slow, what will be the time after 3 hours if now 2:00?",05:00,04:45,05:15,04:30,B
+Hard,HCF & LCM,Find the HCF of 324 and 192.,6,12,24,36,C
+Medium,Date & Time,What time will it be 150 minutes past 10:15 AM?,12:45 PM,1:05 PM,1:15 PM,12:05 PM,A
+Easy,Mixtures & Alligation,"After adding 1 litre acid to 9 litres water, % acid?",10,12,9,11,A
+Easy,Mixtures & Alligation,"After adding 1 litre acid to 9 litres water, % acid?",10,12,9,11,A
+Easy,Simple Interest,"Principal if SI=₹30, 2yrs at 5%?",₹300,₹400,₹200,₹500,A
+Easy,Blood Relations,Tom is the only son of Jack’s father. How is Jack related to Tom?,Father,Brother,Uncle,Son,B
+Medium,Profit & Loss,Profit on selling item for ₹210 with markup of 25% on cost?,₹42,₹52,₹62,₹72,B
+Easy,Vocabulary,"What does ""abate"" mean?",To increase,To humiliate,To reduce,To gather,C
+Hard,Averages,"A man walks 2 hours at 3 km/h, 1 hr at 5 km/h, 1 hr at 2 km/h. Avg speed?",3,3.5,3.25,4,C
+Medium,Date & Time,A clock shows 4:30. What is the angle between hour and minute hands?,75°,60°,45°,90°,A
+Easy,Ratios,Ratio of 15 to 45?,01:03,03:01,01:02,02:01,A
+Medium,Application of TSD,A man rows upstream at 6 km/hr and downstream at 12 km/hr. What is speed in still water?,9 km/hr,8 km/hr,7 km/hr,10 km/hr,A
+Easy,Mixtures & Alligation,Mix 2kg rice @₹30/kg and 3kg @₹50/kg. Avg price?,42,43,44,45,C
+Easy,Simple Interest,"Principal if SI=₹30, 2yrs at 5%?",₹300,₹400,₹200,₹500,A
+Hard,Vocabulary,"To ""abdicate"" means?",To confront,To humiliate,To give up leadership,To gather,C
+Easy,Percentages,What is 10% of 50?,1,5,10,15,C
+Medium,Pattern Recognition,"Find the odd one out: 24, 36, 48, 60, 76.",24,36,48,76,D
+Hard,Simple Interest,"Find time: SI ₹48, principal ₹400, rate 12%.",1yr,2yr,3yr,4yr,B
+Hard,Geometry,What is the volume of a cone with base radius 3 cm and height 4 cm?,36π cm³,12π cm³,24π cm³,16π cm³,B
+Medium,Algebra,"If x^2=25, what are the values of x?",1 and -1,5 and -5,2 and -2,10 and -10,B
+Medium,Simple Interest,Rate for SI ₹60 in 2yr on ₹600?,5%,7%,6%,8%,C
+Easy,Algebra,What is the value of x if x+2=5?,1,2,3,4,C
+Easy,Date & Time,"If Oct 2, 2025 is Thursday, what is day on Oct 6, 2025?",Friday,Saturday,Monday,Tuesday,C
+Easy,Profit & Loss,Profit on ₹120 sold at ₹132?,₹12,₹10,₹8,₹6,A
+Medium,Profit & Loss,Profit on selling item for ₹210 with markup of 25% on cost?,₹42,₹52,₹62,₹72,B
+Hard,Time & Work,"A, B, C can do job in 6 days. A 12 days alone, B 18 days. How many by C alone?",36,9,12,18,A
+Easy,Algebra,"If x-y=3 and y=2, what is x?",1,2,3,5,D
+Hard,Averages,"Weighted avg: 8 students avg 60, 2 students avg 80. What is class avg?",62,64,66,68,B
+Hard,Date & Time,Feb 29 falls on which years?,All,Even,Leap,Odd,C
+Hard,Application of TSD,"A car at 72 km/h travels for 0.5 hour, then 10 km at 60 km/h. Total time?",1 hr,1.17 hr,1.25 hr,1.5 hr,B
+Hard,HCF & LCM,"Numbers are in ratio 2:3, HCF is 12. Numbers are?","24,36","12,18","36,54","15,45",A
+Medium,Vocabulary,"Choose the meaning of ""adverse"".",Favorable,Dangerous,Polite,Humble,B
+Medium,Blood Relations,M is the daughter of N. N is the wife of R. How is M related to R?,Daughter,Wife,Mother,Sister,A
+Medium,Pattern Recognition,"What comes next? 5, 10, 20, 40, ?",60,80,100,120,B
+Medium,Geometry,The diagonal of a square is 8√2 cm. What is its area?,64 cm²,128 cm²,32 cm²,16 cm²,A
+Hard,Percentages,A number is first increased by 10% and then by 20%. What is the total % increase?,32,30,28,25,A
+Medium,Geometry,The diagonal of a square is 8√2 cm. What is its area?,64 cm²,128 cm²,32 cm²,16 cm²,A
+Easy,Date & Time,How many days are there in a leap year?,365,366,367,364,B
+Easy,Percentages,What is 10% of 50?,1,5,10,15,C
+Hard,Time & Work,"If 5 men or 10 women can build a wall in 40 days, how long will 3 men and 4 women take?",18,25,32,36,B
+Hard,Averages,"9, 18, x avg is 15. x?",15,21,18,12,B
+Medium,Simple Interest,"Principal if SI=₹150, 2yr at 7%?",₹1000,₹900,₹1100,₹950,B
+Medium,Application of TSD,"If train A (200m) crosses train B (150m) in opposite direction in 12s at speeds of 40km/h and 50km/h respectively, what is relative speed?",90km/h,100km/h,110km/h,120km/h,B
+Hard,Percentages,"If sugar price rises by 25%, how much % must consumption be reduced to keep expenditure same?",20,22,25,30,A
+Easy,Ratios,Divide 20 by ratio 2:3.,08:12,12:08,16:04,10:10,A
+Hard,HCF & LCM,"LCM of 42, 56, 84 is?",168,504,336,784,B
+Hard,Averages,"A man walks 2 hours at 3 km/h, 1 hr at 5 km/h, 1 hr at 2 km/h. Avg speed?",3,3.5,3.25,4,C
+Easy,Syllogism,"All cats are animals. All animals are beings. Therefore, all cats are?",Dogs,Animals,Beings,Plants,C
+Hard,Mixtures & Alligation,"If 3kg mixture is 20% salt, how much pure salt to add for 30% solution?",0.5kg,0.7kg,0.8kg,1kg,B
+Medium,Synonyms,"Pick the synonym of ""colourful"".",Monochrome,Vibrant,Achromatic,Ashen,B
+Medium,Pattern Recognition,"Find the odd one out: 24, 36, 48, 60, 76.",24,36,48,76,D
+Medium,Date & Time,"If Jan 1, 2019 was Tuesday, what day is Jan 1, 2020?",Tuesday,Wednesday,Monday,Thursday,B
+Hard,Averages,"A man walks 2 hours at 3 km/h, 1 hr at 5 km/h, 1 hr at 2 km/h. Avg speed?",3,3.5,3.25,4,C
+Hard,Averages,"A man walks 2 hours at 3 km/h, 1 hr at 5 km/h, 1 hr at 2 km/h. Avg speed?",3,3.5,3.25,4,C
+Hard,Algebra,"If x + y = 10 and x^2 + y^2 = 58, what is xy?",21,25,14,29,A
+Easy,Antonyms,"Choose the antonym of ""slow"".",Rapid,Tardy,Sluggish,Unhurried,A
+Hard,HCF & LCM,"LCM of two numbers is 120 and HCF is 6. If one number is 24, the other?",36,30,36,18,B
+Hard,Averages,"2 machines produce 80 and 120 gadgets, avg cost is ₹40 and ₹50. What is weighted avg cost?",44,46,48,50,C
+Medium,Ratios,Split ₹120 in 3:2:1.,"60,40,20","30,60,30","50,40,30","40,60,20",A
+Hard,Blood Relations,P is the son of Q. Q is married to R. S is the daughter of R. How is S related to P?,Sister,Mother,Daughter,Aunt,A
+Easy,Geometry,Find the perimeter of a rectangle with length 8 cm and breadth 5 cm.,26 cm,30 cm,40 cm,18 cm,A
+Hard,Blood Relations,"If A is the mother of B and B is the father of C, how is A related to C?",Mother,Grandmother,Aunt,Sister,B
+Easy,Blood Relations,A is the sister of B. How is B related to A?,Brother/Sister,Uncle,Father,Aunt,A
+Hard,Averages,"Weighted avg: 8 students avg 60, 2 students avg 80. What is class avg?",62,64,66,68,B
+Easy,Blood Relations,A is the sister of B. How is B related to A?,Brother/Sister,Uncle,Father,Aunt,A
+Medium,Coding-Decoding,"If RAIN is coded as SBJO, how would SNOW be coded?",TOXP,TODP,TOPX,TPOW,A
+Easy,Profit & Loss,"Profit % if SP ₹60, CP ₹50?",10%,20%,30%,40%,B
+Easy,Algebra,"If x-y=3 and y=2, what is x?",1,2,3,5,D
+Medium,Percentages,"If 18 is 75% of a number, the number is?",20,22,24,25,C
+Hard,Date & Time,Feb 29 falls on which years?,All,Even,Leap,Odd,C
+Medium,Pattern Recognition,"Find the odd one out: 24, 36, 48, 60, 76.",24,36,48,76,D
+Medium,Mixtures & Alligation,"Pure milk costs ₹24/L, water is 0. If 25% water mixed, what is effective rate?",18,20,22,24,B
+Hard,Percentages,"If a number is increased by 40% and then decreased by 20%, what is the net change %?",12,10,15,20,A
+Easy,Percentages,20 is what percent of 100?,10,15,20,25,C
+Hard,Percentages,Which number is 25% more than 40?,45,55,50,60,C
+Hard,Coding-Decoding,"If MANGO is written as NZOHQ, how is APPLE coded?",BQQMF,BQQME,BQQMG,BQQLE,A
+Hard,Percentages,"If sugar price rises by 25%, how much % must consumption be reduced to keep expenditure same?",20,22,25,30,A
+Medium,Geometry,The diagonal of a square is 8√2 cm. What is its area?,64 cm²,128 cm²,32 cm²,16 cm²,A
+Easy,Coding-Decoding,"If MOON is written as NOOM, how is STAR written?",TRAS,TSAR,STIR,SRAT,A
+Medium,Pattern Recognition,"Find the odd one out: 24, 36, 48, 60, 76.",24,36,48,76,D
+Hard,Percentages,A number is first increased by 10% and then by 20%. What is the total % increase?,32,30,28,25,A
+Medium,Application of TSD,A man rows upstream at 6 km/hr and downstream at 12 km/hr. What is speed in still water?,9 km/hr,8 km/hr,7 km/hr,10 km/hr,A
+Hard,Simple Interest,"Principal if SI ₹60, time 2yrs @ 5%",₹600,₹500,₹650,₹550,B
+Hard,Blood Relations,"If T is the sister of U, U is the son of V, V is married to W, how is W related to T?",Mother,Aunt,Sister,Father,A
+Easy,Date & Time,"If Oct 2, 2025 is Thursday, what is day on Oct 6, 2025?",Friday,Saturday,Monday,Tuesday,C
+Easy,Coding-Decoding,"If MOON is written as NOOM, how is STAR written?",TRAS,TSAR,STIR,SRAT,A
+Easy,Algebra,What is the value of x if x+2=5?,1,2,3,4,C
+Easy,Coding-Decoding,"If MOON is written as NOOM, how is STAR written?",TRAS,TSAR,STIR,SRAT,A
+Hard,HCF & LCM,Find the HCF of 324 and 192.,6,12,24,36,C
+Easy,Coding-Decoding,"If MOON is written as NOOM, how is STAR written?",TRAS,TSAR,STIR,SRAT,A
+Easy,Profit & Loss,"Loss percent: cost ₹150, sold ₹120?",10%,15%,20%,25%,C
+Hard,Blood Relations,"If T is the sister of U, U is the son of V, V is married to W, how is W related to T?",Mother,Aunt,Sister,Father,A
+Hard,Percentages,The value of a machine depreciated 10% per year for 2 years. Original value = 20000. Find current value.,16200,18000,16220,17200,A
+Hard,HCF & LCM,"Find smallest number divisible by 6, 8, 15, and 20.",120,240,60,480,B
+Hard,Blood Relations,"If A is the mother of B and B is the father of C, how is A related to C?",Mother,Grandmother,Aunt,Sister,B
+Hard,Time & Work,"If 20 men can do a work in 30 days, how long will 15 men take?",40,30,60,36,A
+Medium,Blood Relations,"If A is B’s mother and C is A’s daughter, how is C related to B?",Sister,Wife,Daughter,Aunt,A
+Hard,Blood Relations,"If T is the sister of U, U is the son of V, V is married to W, how is W related to T?",Mother,Aunt,Sister,Father,A
+Hard,Percentages,120 is what percent less than 200?,40,50,25,60,A
+Hard,Percentages,"If sugar price rises by 25%, how much % must consumption be reduced to keep expenditure same?",20,22,25,30,A
+Hard,Percentages,"If sugar price rises by 25%, how much % must consumption be reduced to keep expenditure same?",20,22,25,30,A
+Medium,Syllogism,All roses are red. Some red things are books. What can we infer?,Some roses are books,All books are roses,All red things are roses,Can’t say,D
+Easy,Blood Relations,Tom is the only son of Jack’s father. How is Jack related to Tom?,Father,Brother,Uncle,Son,B
+Hard,Time & Work,"If A can do a work in half the time taken by B. Together finish in 6 days. Alone, how many by B?",24,12,18,16,A
+Hard,Simple Interest,SI on ₹1500 for 5yrs @ 6%.,₹450,₹300,₹400,₹500,A
+Medium,Averages,A car travels 60 km at 40 km/h and returns at 60 km/h. Find average speed?,48,50,52,54,A
+Hard,Syllogism,No stars are planets. Some planets are moons. What follows?,No moons are stars,All moons are planets,Some moons are not stars,,C

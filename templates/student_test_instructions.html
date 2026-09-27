@@ -1,0 +1,180 @@
+{% extends "student_base.html" %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a;
+        --white: #ffffff;
+        --bg-soft: #fcfbf7;
+        --dark: #1a1a1a;
+        --glass: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(226, 176, 176, 0.15);
+    }
+
+    body { background-color: var(--bg-soft); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Layout: "Elephant" */
+    .elephant-protocol-wrapper {
+        max-width: 800px;
+        margin: 4rem auto;
+        padding: 0 20px;
+    }
+
+    /* Card: "Gazelle" */
+    .gazelle-protocol-card {
+        background: var(--glass);
+        backdrop-filter: blur(25px);
+        padding: 3.5rem;
+        border-radius: 40px;
+        box-shadow: 0 30px 70px rgba(0,0,0,0.06);
+        border: 1px solid var(--glass-border);
+        animation: slideUpFade 0.8s ease-out;
+    }
+
+    /* Header: "Giraffe" */
+    .giraffe-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+    .giraffe-header h2 {
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: var(--dark);
+        margin: 0;
+        letter-spacing: -1.5px;
+    }
+    .giraffe-header span { color: var(--primary-gold); }
+
+    /* Test List: "Owl" */
+    .owl-test-sequence {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 3rem;
+    }
+
+    .test-badge {
+        background: var(--dark);
+        color: white;
+        padding: 8px 18px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .test-badge::before { content: '◈'; color: var(--primary-gold); }
+
+    /* Instructions: "Snake" */
+    .snake-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 3rem;
+        text-align: left;
+    }
+
+    .snake-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-weight: 600;
+        color: #555;
+        font-size: 0.95rem;
+        display: flex;
+        gap: 12px;
+    }
+
+    .snake-list li b { color: var(--dark); }
+
+    /* Warning: "Bat" */
+    .bat-integrity-notice {
+        background: #fff9e6;
+        border-left: 5px solid var(--primary-gold);
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 2.5rem;
+        text-align: left;
+    }
+
+    .bat-integrity-notice h4 {
+        margin: 0 0 5px 0;
+        color: var(--dark);
+        font-weight: 800;
+        font-size: 0.9rem;
+    }
+
+    /* Button: "Lion" */
+    .lion-proceed-btn {
+        background: var(--dark);
+        color: white;
+        width: 100%;
+        padding: 20px;
+        border-radius: 50px;
+        border: none;
+        font-weight: 800;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: block;
+        text-decoration: none;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .lion-proceed-btn:hover {
+        background: var(--primary-gold);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(226, 176, 74, 0.3);
+    }
+
+    @keyframes slideUpFade {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="elephant-protocol-wrapper">
+    <div class="gazelle-protocol-card">
+        
+        <header class="giraffe-header">
+            <div style="font-size: 3.5rem; margin-bottom: 10px;">📋</div>
+            <h2>Assessment <span>Protocol.</span></h2>
+            <p style="color: #888; font-weight: 500;">Please verify the sequence and integrity rules.</p>
+        </header>
+
+        <h3 style="font-size: 0.8rem; font-weight: 800; text-align: center; color: #aaa; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 15px;">Tests in this Sequence</h3>
+        <div class="owl-test-sequence">
+            {% for name, available in tests.items() %}
+                {% if available %}
+                    <div class="test-badge">{{ name }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <ul class="snake-list">
+            <li>Tests must be completed in order without <b>interruption</b>.</li>
+            <li>Browser refresh and window minimization are <b>disabled</b>.</li>
+            <li>Selection, copying, and context menus are <b>restricted</b>.</li>
+            <li>Full-screen mode is <b>mandatory</b> for all sessions.</li>
+        </ul>
+
+        <div class="bat-integrity-notice">
+            <h4>SECURITY ALERT</h4>
+            <p style="margin: 0; font-size: 0.85rem; color: #666; font-weight: 500;">
+                Tab-switching is monitored. On the <b>3rd attempt</b>, the system will execute an <b>automatic submission</b> and flag the attempt.
+            </p>
+        </div>
+
+        <button 
+            onclick="window.location.href='{{ url_for('student.round_instructions', drive_index=drive_index, round='aptitude') }}'"
+            class="lion-proceed-btn">
+            Proceed to Aptitude Module
+        </button>
+
+    </div>
+</div>
+
+{% endblock %}

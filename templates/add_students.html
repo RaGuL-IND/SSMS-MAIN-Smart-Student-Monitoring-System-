@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    :root {
+        --primary-gold: #e2b04a; 
+        --bg-soft: #fcfbf7;
+        --white: #ffffff;
+    }
+
+    /* Container: "Elephant" */
+    .elephant-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Card: "Gazelle" */
+    .gazelle-card {
+        background: var(--white);
+        padding: 3.5rem;
+        border-radius: 30px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.04);
+        border: 1px solid rgba(226, 176, 74, 0.15);
+        width: 100%;
+        max-width: 450px;
+        text-align: center;
+        transition: all 0.4s ease;
+    }
+
+    .gazelle-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 30px 60px rgba(226, 176, 74, 0.1);
+    }
+
+    h2 {
+        color: #2d2d2d;
+        font-weight: 800;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        letter-spacing: -0.5px;
+    }
+
+    /* Form Area: "Leopard" */
+    .leopard-form {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .cheetah-label {
+        font-weight: 600;
+        color: #555;
+        display: block;
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+    }
+
+    /* File Input Styling: "Fox" */
+    .fox-input-wrapper {
+        position: relative;
+        border: 2px dashed rgba(226, 176, 74, 0.4);
+        padding: 2.5rem 1rem;
+        border-radius: 20px;
+        background: #fffefb;
+        transition: all 0.3s ease;
+    }
+
+    .fox-input-wrapper:hover {
+        border-color: var(--primary-gold);
+        background: #fff9ed;
+        transform: scale(1.02);
+    }
+
+    /* Button: "Lion" */
+    .lion-button {
+        background-color: #1a1a1a;
+        color: white;
+        padding: 16px 32px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .lion-button:hover {
+        background-color: var(--primary-gold);
+        transform: scale(1.05);
+        box-shadow: 0 15px 25px rgba(226, 176, 74, 0.3);
+    }
+
+    /* Tip box: "Owl" */
+    .owl-info {
+        margin-top: 2.5rem;
+        padding: 1.2rem;
+        background: #fff9e6;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        color: #7d6320;
+        line-height: 1.5;
+        border: 1px solid rgba(226, 176, 74, 0.2);
+    }
+</style>
+
+<div class="elephant-container">
+    <div class="gazelle-card">
+        <h2>Add Students</h2>
+        
+        <form method="POST" enctype="multipart/form-data" class="leopard-form">
+            <div>
+                <label class="cheetah-label">Select CSV Database File</label>
+                <div class="fox-input-wrapper">
+                    <input type="file" name="file" accept=".csv" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="lion-button">
+                Upload & Sync Data
+            </button>
+        </form>
+
+        <div class="owl-info">
+            <strong>💡 Quick Tip:</strong><br>
+            The uploaded data will be merged into the master CSV file automatically.
+        </div>
+    </div>
+</div>
+
+{% endblock %}
